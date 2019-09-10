@@ -15,6 +15,7 @@ Windows:
 ```sh
 $ pip install -r requirements.txt
 ```
+Download `boston_hosuing_pred.py`.
 
 ## Usage example
 
