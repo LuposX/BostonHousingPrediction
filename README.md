@@ -23,7 +23,7 @@ You can run the programm with:
 ```sh
 $ py boston_hosuing_pred.py linear_regression
 ```  
-To see the help:
+To see the help(for extra options) do:
 ```sh
 $ py boston_hosuing_pred.py -h
 ```  
