@@ -1,8 +1,8 @@
 # Boston Housing Prediction
 > Predict Housing prices in boston with different Models.   
   
-[![License][license]
-[![Codacy Badge][codacy-badge]
+[![License][license]]
+[![Codacy Badge][codacy-badge]][codacy-url]
 
 Boston Housing Prediction is a python script that can predict the housing prices in boston with different models, the user can choose from.  
 
@@ -55,5 +55,6 @@ Distributed under the MIT license. See ``LICENSE`` for more information.
 5. Create a new Pull Request
 
 <!-- Markdown link & img dfn's -->
-[codacy-badge]: https://api.codacy.com/project/badge/Grade/089e59afa6a44e629b1267f8abaad038)](https://www.codacy.com/manual/LuposX/BostonHousingPrediction?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=LuposX/BostonHousingPrediction&amp;utm_campaign=Badge_Grade
+[codacy-badge]: https://api.codacy.com/project/badge/Grade/089e59afa6a44e629b1267f8abaad038
+[codacy-url]:https://app.codacy.com/manual/LuposX/BostonHousingPrediction/dashboard
 [license]: https://img.shields.io/github/license/LuposX/sentdex_fixed_market_stock
