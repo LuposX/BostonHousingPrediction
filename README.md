@@ -48,6 +48,7 @@ $ py boston_hosuing_pred.py -h
     * neural network
 
 * Add saved model can be loaded
+* Upload pre-trained models 
 
 ## Meta
 
