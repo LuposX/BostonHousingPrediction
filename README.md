@@ -42,7 +42,7 @@ $ py boston_hosuing_pred.py -h
 ## Roadmap (planned updates)
 
 * Add more models
-    * polynomial regression
+   * polynomial regression
     * normal equation
     * svm
     * neural network
