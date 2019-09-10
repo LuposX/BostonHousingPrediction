@@ -1,9 +1,9 @@
 # Boston Housing Prediction
-> Short blurb about what your product does.
-[![License](https://img.shields.io/github/license/LuposX/sentdex_fixed_market_stock)](LICENSE) 
-[![Codacy Badge]()
+> Predict Housing prices in boston with different Models.    
+[![License](https://img.shields.io/github/license/LuposX/sentdex_fixed_market_stock)](LICENSE)   
+[![Codacy Badge]()]  
 
-One to two paragraph statement about your product and what it does.
+Boston Housing Prediction is a python script that can predict the housing prices in boston with different models, the user can choose from.
 
 ![](header.png)
 
