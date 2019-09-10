@@ -16,7 +16,6 @@ import argparse
 import csv
 import os
 from os import path
-from threading import Thread
 import multiprocessing as mp
 import time
 import random
@@ -27,8 +26,6 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 import urllib
-from urllib import request
-from matplotlib import cm as CM
 
 # TODO: fix train and test loss
 # TODO: add verify  verify a single preictions
