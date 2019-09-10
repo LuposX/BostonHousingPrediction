@@ -26,6 +26,7 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 import urllib
+import operator
 
 # TODO: fix train and test loss
 # TODO: add verify  verify a single preictions
@@ -61,6 +62,10 @@ def get_Data() -> object:
             print("oops, file doesn't exist")
             checker_dataset_exist = False
 
+
+# used to remove trailing whitespace from file
+def chomped_lines(it):
+    return map(operator.methodcaller('rstrip', '\r\n'), it)
 
 # visualize data
 def visualize_Data(df: object) -> None:
@@ -163,17 +168,24 @@ def visualize(args, df_data, parameter_list: list) -> None:
     x_train_loose = parameter_list[7]
 
     # prints Mean loss of last epoch
-    print(" ")
-    print("Mean-train loss of last epoch: ", str(round(train_loss_history[-1], 6)))
-    print("Mean-test loss of last epoch:  ", str(round(test_loss_history[-1], 6)))
-    print("Time needed for training:      ", str(round(evaluation_time, 4)) + "s.")
+    if not args.infile:
+        print(" ")
+        print("Mean-train loss of last epoch: ", str(round(train_loss_history[-1], 6)))
+        print("Mean-test loss of last epoch:  ", str(round(test_loss_history[-1], 6)))
+        print("Time needed for training:      ", str(round(evaluation_time, 4)) + "s.")
 
     # communication is key
-    if args.fd == "intermediate" or args.fd == "full":
+    if (args.fd == "intermediate" or args.fd == "full") and not args.infile:
         print(" ")
         print("Value of W1 after training:   ", w1)
         print("Value of Bias after training: ", bias)
         print(" ")
+    elif args.infile:
+        print(" ")
+        print("Value of W1:   ", w1)
+        print("Value of Bias: ", bias)
+        print(" ")
+
     if args.v_data:
         visualize_Data(df_data)
 
@@ -375,7 +387,7 @@ if __name__ == "__main__":
                         type=str, choices=["linear_regression", "polynomial_regression"])
     parser.add_argument("--infile", help="If file specified model will load weights from it."
                                        "Else it will normally train.(default: no file loaded)"
-                        , metavar="FILE", type=argparse.FileType('r', encoding='UTF-8'))
+                        , metavar="FILE", type=str) # type=argparse.FileType('r', encoding='UTF-8')
     # implemented
     parser.add_argument("--v_data", metavar="VISUALIZE_DATA",
                         help="Set it to True if you want to get a visualization of the data.(default: %(default)s)",
@@ -416,7 +428,31 @@ if __name__ == "__main__":
         print("--------------------------------------")
 
         model = LinearRegression(preproc_data(df_data))  # create our model
-        model.train()  # train our model
+
+        if not args.infile:
+            model.train()  # train our model
+        else:
+            try:
+                filename = str(args.infile)
+                file_list = []
+                with open(filename, "r") as infile:
+                    for line in chomped_lines(infile):
+                        file_list.append(line)
+            except FileNotFoundError as e:
+                print("Errot file not found: ", str(e))
+                try:
+                    if visualize_process.is_alive():
+                        visualize_process.terminate()
+                except Exception as e:
+                    pass
+                sys.exit(1)  # exit the script sucessful
+
+            try:
+                model.w1 = float(file_list[1])
+                model.bias = float(file_list[2])
+            except ValueError as e:
+                print(str(e))
+
 
         # if save parameter is true model gets saved
         if args.save:
