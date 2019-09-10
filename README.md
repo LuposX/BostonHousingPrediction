@@ -56,8 +56,6 @@ $ py boston-housing-0_1_1.py -h
     *   svm
     *   neural network
 
-*   Add saved model can be loaded
-
 *   Upload pre-trained models 
 
 ## Meta
