@@ -16,17 +16,17 @@ To install the `requirements` for the script do:
 ```sh
 $ pip install -r requirements.txt
 ```
-Download the script `boston_hosuing_pred.py`.
+Download the script `boston_housing_pred.py`.
 
 ## Usage example
 
 You can run the programm with:
 ```sh
-$ py boston_hosuing_pred.py linear_regression
+$ py boston_housing_pred.py linear_regression
 ```  
 To see the help(for extra options) do:
 ```sh
-$ py boston_hosuing_pred.py -h
+$ py boston_housing_pred.py -h
 ```  
 
 <!--_For more examples and usage, please refer to the [Wiki][wiki]._-->
