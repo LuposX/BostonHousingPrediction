@@ -36,18 +36,21 @@ $ py boston_housing_pred.py -h
 *   0.1.0  
     *   The first proper release
     *   Realese of readme (Thanks @dbader)
+    
 *   0.0.1  
     *   Work in progress  
 
 ## Roadmap (planned updates)
 
 *   Add more models
-   *   polynomial regression
+
+    *   polynomial regression
     *   normal equation
     *   svm
     *   neural network
 
 *   Add saved model can be loaded
+
 *   Upload pre-trained models 
 
 ## Meta
