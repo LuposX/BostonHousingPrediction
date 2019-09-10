@@ -112,23 +112,28 @@ def is_non_zero_file() -> object:
 
 def download_dataset() -> None:
     try:
-        file = open("boston_housing.csv", "w+")  # the plus asgins when not exist we create it
-        data = urllib.request.urlopen(
-            "https://raw.githubusercontent.com/udacity/machine-learning/master/projects/boston_housing/housing.csv").read().decode(
-            'utf-8')
-        file.write(data)
-        file.close()
-    except:
-        try:
+        if url.lower().startswith('http'):
             file = open("boston_housing.csv", "w+")  # the plus asgins when not exist we create it
             data = urllib.request.urlopen(
-                "https://raw.githubusercontent.com/LuposX/BostonHousingPrediction/master/dataset/boston_housing.csv").read().decode(
-                'utf-8')
+            "https://raw.githubusercontent.com/udacity/machine-learning/master/projects/boston_housing/housing.csv").read().decode(
+            'utf-8')
             file.write(data)
             file.close()
+         else:
+            raise ValueError from None      
+    except:
+        try:
+            if url.lower().startswith('http'):
+                file = open("boston_housing.csv", "w+")  # the plus asgins when not exist we create it
+                data = urllib.request.urlopen(
+                 "https://raw.githubusercontent.com/LuposX/BostonHousingPrediction/master/dataset/boston_housing.csv").read().decode(
+                'utf-8')
+                file.write(data)
+                file.close()  
+            else:
+                raise ValueError from None      
         except Exception as e:
             print("Error: ", str(e))
-
 
 def preproc_data(df: object) -> None:
     # regularization and rounding on the 4th decimal point
