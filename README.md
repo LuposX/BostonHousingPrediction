@@ -2,11 +2,11 @@
 > Predict Housing prices in boston with different Models.   
   
 [![License](https://img.shields.io/github/license/LuposX/sentdex_fixed_market_stock)](LICENSE)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/089e59afa6a44e629b1267f8abaad038)](https://www.codacy.com/manual/LuposX/BostonHousingPrediction?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=LuposX/BostonHousingPrediction&amp;utm_campaign=Badge_Grade)
+[![Codacy Badge][codacy-badge]]
 
 Boston Housing Prediction is a python script that can predict the housing prices in boston with different models, the user can choose from.  
 
-![header](res/img/script_preview.gif)
+![header](res/img/script_preview._optimized.gif)
 
 ## Installation
 
@@ -55,9 +55,4 @@ Distributed under the MIT license. See ``LICENSE`` for more information.
 5. Create a new Pull Request
 
 <!-- Markdown link & img dfn's -->
-[npm-image]: https://img.shields.io/npm/v/datadog-metrics.svg?style=flat-square
-[npm-url]: https://npmjs.org/package/datadog-metrics
-[npm-downloads]: https://img.shields.io/npm/dm/datadog-metrics.svg?style=flat-square
-[travis-image]: https://img.shields.io/travis/dbader/node-datadog-metrics/master.svg?style=flat-square
-[travis-url]: https://travis-ci.org/dbader/node-datadog-metrics
-[wiki]: https://github.com/yourname/yourproject/wiki
+[codacy-badge]: https://api.codacy.com/project/badge/Grade/089e59afa6a44e629b1267f8abaad038)](https://www.codacy.com/manual/LuposX/BostonHousingPrediction?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=LuposX/BostonHousingPrediction&amp;utm_campaign=Badge_Grade
