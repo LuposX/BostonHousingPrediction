@@ -33,22 +33,22 @@ $ py boston_hosuing_pred.py -h
 
 ## Release History
 
-* 0.1.0
-    * The first proper release
-    * Realese of readme (Thanks @dbader)
-* 0.0.1
-    * Work in progress
+*   0.1.0  
+    *   The first proper release
+    *   Realese of readme (Thanks @dbader)
+*   0.0.1  
+    *   Work in progress  
 
 ## Roadmap (planned updates)
 
-* Add more models
-   * polynomial regression
-    * normal equation
-    * svm
-    * neural network
+*   Add more models
+   *   polynomial regression
+    *   normal equation
+    *   svm
+    *   neural network
 
-* Add saved model can be loaded
-* Upload pre-trained models 
+*   Add saved model can be loaded
+*   Upload pre-trained models 
 
 ## Meta
 
@@ -60,11 +60,11 @@ Distributed under the MIT license. See ``LICENSE`` for more information.
 
 ## Contributing
 
-1. Fork it (<https://github.com/LuposX/BostonHousingPrediction/fork>)
-2. Create your feature branch (`git checkout -b feature/fooBar`)
-3. Commit your changes (`git commit -am 'Add some fooBar'`)
-4. Push to the branch (`git push origin feature/fooBar`)
-5. Create a new Pull Request
+1.  Fork it (<https://github.com/LuposX/BostonHousingPrediction/fork>)
+2.  Create your feature branch (`git checkout -b feature/fooBar`)
+3.  Commit your changes (`git commit -am 'Add some fooBar'`)
+4.  Push to the branch (`git push origin feature/fooBar`)
+5.  Create a new Pull Request
 
 <!-- Markdown link & img dfn's -->
 [codacy-badge]: https://api.codacy.com/project/badge/Grade/089e59afa6a44e629b1267f8abaad038
