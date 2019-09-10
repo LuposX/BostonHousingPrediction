@@ -69,7 +69,7 @@ def visualize_Data(df: object) -> None:
     sns.set_style("darkgrid")
 
     # set number of subplots and size
-    f, axes = plt.subplots(2, 2, figsize=(12, 9))
+    axes = plt.subplots(2, 2, figsize=(12, 9))
     axes = axes.flatten()
 
 
