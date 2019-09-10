@@ -9,6 +9,7 @@ Boston Housing Prediction is a python script that can predict the housing prices
 ![header](res/img/script_preview_scaled.gif)
 
 ## Installation
+You need to have `python >= 3.6`.
 
 Windows:
 
