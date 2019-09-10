@@ -48,17 +48,17 @@ def get_Data() -> object:
     try:
         if path.isfile("boston_housing.csv"):
             df = pd.read_csv("boston_housing.csv")
-            checker_dataset_exist = True
+            global checker_dataset_exist = True
             return df
     except:
         try:
             if path.isfile("housing.csv"):
                 df = pd.read_csv("housing.csv")
-                checker_dataset_exist = True
+                global checker_dataset_exist = True
                 return df
         except FileNotFoundError:
             print("oops, file doesn't exist")
-            checker_dataset_exist = False
+            global checker_dataset_exist = False
 
 
 # visualize data
@@ -271,7 +271,7 @@ class LinearRegression:
                     f1 = self.data_test[i]
                     pred_target = self.w1 * f1 + self.bias
                     test_loss = loss(pred_target, self.target_test[i])
-                    test_loss_sum += train_loss
+                    test_loss_sum += test_loss
 
                 if args.fd == "full":
                     print("Epoch" + str(_) + " Example" + str(i) + ".Train loss: ", str(round(train_loss, 6)))  # prints loss for each example
