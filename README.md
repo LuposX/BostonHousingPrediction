@@ -37,6 +37,7 @@ $ py boston_housing_pred.py -h
     *   The first proper release
     *   Realese of readme (Thanks @dbader)
     
+    
 *   0.0.1  
     *   Work in progress  
 
