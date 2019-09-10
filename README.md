@@ -19,9 +19,16 @@ Download `boston_hosuing_pred.py`.
 
 ## Usage example
 
-A few motivating and useful examples of how your product can be used. Spice this up with code blocks and potentially more screenshots.
+You can run the programm with:
+```sh
+$ py boston_hosuing_pred.py linear_regression
+```  
+To see the help:
+```sh
+$ py boston_hosuing_pred.py -h
+```  
 
-_For more examples and usage, please refer to the [Wiki][wiki]._
+<!--_For more examples and usage, please refer to the [Wiki][wiki]._-->
 
 ## Release History
 
