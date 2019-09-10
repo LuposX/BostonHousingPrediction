@@ -1,5 +1,6 @@
 # Boston Housing Prediction
-> Predict Housing prices in boston with different Models.    
+> Predict Housing prices in boston with different Models.   
+  
 [![License](https://img.shields.io/github/license/LuposX/sentdex_fixed_market_stock)](LICENSE)   
 [![Codacy Badge]()]  
 
