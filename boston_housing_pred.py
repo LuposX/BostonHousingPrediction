@@ -32,7 +32,8 @@ import urllib
 # TODO: programm should run like console programm with different command
 
 # GLOBAL VARIABLES
-checker_dataset_exist = False  # gets set on true from get_Data()
+global checker_dataset_exist  # gets set on true from get_Data()
+checker_dataset_exist = False
 # pool = multiprocessing.Pool(3) # set the pool(how many kernels) are used for multiprocessing
 visualize_process = None  # gets later used from multiprocessing
 
@@ -48,17 +49,17 @@ def get_Data() -> object:
     try:
         if path.isfile("boston_housing.csv"):
             df = pd.read_csv("boston_housing.csv")
-            global checker_dataset_exist = True
+            checker_dataset_exist = True
             return df
     except:
         try:
             if path.isfile("housing.csv"):
                 df = pd.read_csv("housing.csv")
-                global checker_dataset_exist = True
+                checker_dataset_exist = True
                 return df
         except FileNotFoundError:
             print("oops, file doesn't exist")
-            global checker_dataset_exist = False
+            checker_dataset_exist = False
 
 
 # visualize data
@@ -71,7 +72,6 @@ def visualize_Data(df: object) -> None:
     # set number of subplots and size
     axes = plt.subplots(2, 2, figsize=(12, 9))
     axes = axes.flatten()
-
 
     # draw kdeplot
     sns.kdeplot(df["MEDV"], shade=True, cut=0, ax=axes[0], color="blue")
@@ -112,26 +112,26 @@ def is_non_zero_file() -> object:
 
 def download_dataset() -> None:
     try:
+        url = "https://raw.githubusercontent.com/udacity/machine-learning/master/projects/boston_housing/housing.csv"
         if url.lower().startswith('http'):
             file = open("boston_housing.csv", "w+")  # the plus asgins when not exist we create it
-            data = urllib.request.urlopen(
-            "https://raw.githubusercontent.com/udacity/machine-learning/master/projects/boston_housing/housing.csv").read().decode(
+            data = urllib.request.urlopen(url).read().decode(
             'utf-8')
             file.write(data)
             file.close()
-         else:
-            raise ValueError from None      
+        else:
+            raise ValueError from None
     except:
         try:
+            url = "https://raw.githubusercontent.com/LuposX/BostonHousingPrediction/master/dataset/boston_housing.csv"
             if url.lower().startswith('http'):
                 file = open("boston_housing.csv", "w+")  # the plus asgins when not exist we create it
-                data = urllib.request.urlopen(
-                 "https://raw.githubusercontent.com/LuposX/BostonHousingPrediction/master/dataset/boston_housing.csv").read().decode(
+                data = urllib.request.urlopen(url).read().decode(
                 'utf-8')
                 file.write(data)
-                file.close()  
+                file.close()
             else:
-                raise ValueError from None      
+                raise ValueError from None
         except Exception as e:
             print("Error: ", str(e))
 
