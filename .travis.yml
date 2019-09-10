@@ -11,4 +11,4 @@ install:
   - pip install -r requirements.txt
 # command to run tests
 script:
-  - boston_housing_pred.py linear_regression
+  - py boston_housing_pred.py linear_regression
