@@ -3,6 +3,7 @@ Author: Lupos
 Started: 08.09.2019
 Lang: Phyton
 Description: Prediction of boston housing market with lienar - regression.
+version: 0.1.1
 
 Dataset:
 Housing Values in Suburbs of Boston
