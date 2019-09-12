@@ -17,30 +17,35 @@ To install the `requirements` for the script do:
 ```sh
 $ pip install -r requirements.txt
 ```
-Download the script `boston_housing_pred.py`.
+Download the script `boston-housing-0_1_1.py`.
 
 ## Usage example
 
 You can run the programm with:
 ```sh
-$ py boston_housing_pred.py linear_regression
+$ py boston-housing-0_1_1.py linear_regression
 ```  
 To see the help(for extra options) do:
 ```sh
-$ py boston_housing_pred.py -h
+$ py boston-housing-0_1_1.py -h
 ```  
 
 <!--_For more examples and usage, please refer to the [Wiki][wiki]._-->
 
 ## Release History
 
+*   0.1.1
+    *   added functionality to load models without training
+    *   plots are now outsourced and handled by a different kernel
+    *   dataset gets automatically downloaded when missing
+    *   v_data shows 4 different plots to describe the data(previously 2).
+    
 *   0.1.0  
     *   The first proper release
     *   Realese of readme (Thanks @dbader)
-    
-    
+       
 *   0.0.1  
-    *   Work in progress  
+    *   Work in progress
 
 ## Roadmap (planned updates)
 
@@ -50,8 +55,6 @@ $ py boston_housing_pred.py -h
     *   normal equation
     *   svm
     *   neural network
-
-*   Add saved model can be loaded
 
 *   Upload pre-trained models 
 
