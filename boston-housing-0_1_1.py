@@ -441,11 +441,8 @@ if __name__ == "__main__":
                         file_list.append(line)
             except FileNotFoundError as e:
                 print("Errot file not found: ", str(e))
-                try:
-                    if visualize_process.is_alive():
-                        visualize_process.terminate()
-                except Exception as e:
-                    pass
+                if visualize_process.is_alive():
+                    visualize_process.terminate()
                 sys.exit(1)  # exit the script sucessful
 
             try:
