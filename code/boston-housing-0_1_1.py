@@ -30,8 +30,6 @@ import urllib
 import operator
 
 # TODO: fix train and test loss
-# TODO: add verify  verify a single preictions
-# TODO: programm should run like console programm with different command
 
 # GLOBAL VARIABLES
 global checker_dataset_exist  # gets set on true from get_Data()
@@ -216,7 +214,7 @@ def visualize(args, df_data, parameter_list: list) -> None:
     data = pd.DataFrame(data, columns=["x", "train", "test"])
 
     # plot loss over time
-    if args.v_loss:
+    if args.v_loss and not args.infile:
         sns.set_style("darkgrid")
         plt.figure(figsize=(12, 6))
         sns.lineplot(x="x", y="train", data=data, label="train", color="orange")
@@ -453,7 +451,7 @@ if __name__ == "__main__":
 
 
         # if save parameter is true model gets saved
-        if args.save:
+        if args.save and not args.infile:
             model.save()
 
         # output_mp = mp.Queue()# Define an output queue. for multiprocessing
