@@ -3,8 +3,8 @@
   
 [![License][license-badge]][license-url]
 [![Codacy Badge][codacy-badge]][codacy-url]
-[![Build Status][travis-badge]][travis-url]  
-![Lines of Code][lines-codes-badge]]
+[![Build Status][travis-badge]][travis-url]
+![Lines of Code][lines-codes-badge]]  
 Boston Housing Prediction is a python script that can predict the housing prices in boston with different models, the user can choose from.  
 
 ![header](res/img/script_preview_scaled.gif)
