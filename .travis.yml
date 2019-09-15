@@ -10,3 +10,4 @@ install:
 # command to run tests
 script:
   - python boston-housing-0_1_2.py linear_regression < testing.txt
+  - python code/boston-housing-main.py linear_regression < testing.txt
