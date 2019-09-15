@@ -27,7 +27,6 @@ def get_Data() -> object:
                 return df
         except FileNotFoundError:
             print("oops, file doesn't exist")
-            checker_dataset_exist = False
 
 
 # used to remove trailing whitespace from file
