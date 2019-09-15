@@ -3,7 +3,6 @@ import os
 from os import path
 
 import matplotlib.pyplot as plt
-import numpy as np
 import pandas as pd
 import seaborn as sns
 import numpy as np
@@ -20,13 +19,11 @@ def get_Data() -> object:
     try:
         if path.isfile("boston_housing.csv"):
             df = pd.read_csv("boston_housing.csv")
-            checker_dataset_exist = True
             return df
     except:
         try:
             if path.isfile("housing.csv"):
                 df = pd.read_csv("housing.csv")
-                checker_dataset_exist = True
                 return df
         except FileNotFoundError:
             print("oops, file doesn't exist")
