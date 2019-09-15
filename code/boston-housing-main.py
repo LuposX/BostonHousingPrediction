@@ -66,9 +66,9 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     # check if the dataset exist
-    if not checker_dataset_exist:
-       download_dataset()
-       df_data = get_Data()
+    if not is_non_zero_file():
+        download_dataset()
+        df_data = get_Data()
     else:
         df_data = get_Data()
 

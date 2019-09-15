@@ -32,8 +32,6 @@ import operator
 # TODO: fix train and test loss
 
 # GLOBAL VARIABLES
-global checker_dataset_exist  # gets set on true from get_Data()
-checker_dataset_exist = False
 # pool = multiprocessing.Pool(3) # set the pool(how many kernels) are used for multiprocessing
 visualize_process = None  # gets later used from multiprocessing
 
@@ -49,17 +47,14 @@ def get_Data() -> object:
     try:
         if path.isfile("boston_housing.csv"):
             df = pd.read_csv("boston_housing.csv")
-            checker_dataset_exist = True
             return df
     except:
         try:
             if path.isfile("housing.csv"):
                 df = pd.read_csv("housing.csv")
-                checker_dataset_exist = True
                 return df
         except FileNotFoundError:
             print("oops, file doesn't exist")
-            checker_dataset_exist = False
 
 
 # used to remove trailing whitespace from file
@@ -408,7 +403,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     # check if the dataset exist
-    if not checker_dataset_exist:
+    if not is_non_zero_file():
        download_dataset()
        df_data = get_Data()
     else:
