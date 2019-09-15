@@ -25,8 +25,6 @@ from misc_libary import *
 # TODO: fix train and test loss
 
 # GLOBAL VARIABLES
-global checker_dataset_exist  # gets set on true from get_Data()
-checker_dataset_exist = False
 # pool = multiprocessing.Pool(3) # set the pool(how many kernels) are used for multiprocessing
 visualize_process = None  # gets later used from multiprocessing
 
