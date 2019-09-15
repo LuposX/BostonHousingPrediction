@@ -3,7 +3,7 @@ Author: Lupos
 Started: 08.09.2019
 Lang: Phyton
 Description: Prediction of boston housing market with lienar - regression.
-version: 0.1.1
+version: 0.1.2
 
 Dataset:
 Housing Values in Suburbs of Boston
@@ -75,7 +75,7 @@ def visualize_Data(df: object) -> None:
 
     # set number of subplots and size
     axes = plt.subplots(2, 2, figsize=(12, 9))
-    axes = axes.flatten()
+    axes = axes[1].flatten()  # axes[1] because axes is a tulpl and figure is in it
 
     # draw kdeplot
     sns.kdeplot(df["MEDV"], shade=True, cut=0, ax=axes[0], color="blue")
@@ -348,6 +348,10 @@ class LinearRegression:
                             visualize_process.terminate()
                         except Exception as e:
                             print("Error: ", str(e))
+                    print(" ")
+                    print("Please be noted that this value is a estimate. I am not liable responsibly.")
+                    print("For more information about the copyright of this programm look at my Github repository: ")
+                    print("github.com/LuposX/BostonHousingPrediction")
                     sys.exit(0)  # exit the script sucessful
                     break
                 else:
@@ -358,16 +362,6 @@ class LinearRegression:
                     print("The model predicted that a house with a RM value of: " + str(rm_input) + ".")
                     print("Is worth about: " + str(round(self.pred_target, 4)) + " in 10,000$(GER 10.000$).")
                     print(" ")
-                    print("Please be noted that this value is a estimate. I am not liable responsibly.")
-                    print("For more information about the copyright of this programm look at my Github repository: ")
-                    print("github.com/LuposX/BostonHousingPrediction")
-                    if visualize_process.is_alive():
-                        try:
-                            visualize_process.terminate()
-                        except Exception as e:
-                            print("Error: ", str(e))
-                    sys.exit(0)  # exit the script sucessful
-                    break
             except ValueError:
                 print("Invalid Input!")
 
