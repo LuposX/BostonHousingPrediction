@@ -18,7 +18,7 @@ To install the `requirements` for the script do:
 $ pip install -r requirements.txt
 ```
 
-Download the latest release of the script `boston-housing-X_X_X.py` You can also download the files under release..
+Download the latest release of the script `boston-housing-X_X_X.py` You can also download the script under release.
 
 ## Usage example
 
