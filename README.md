@@ -3,8 +3,8 @@
   
 [![License][license-badge]][license-url]
 [![Codacy Badge][codacy-badge]][codacy-url]
-[![Build Status][travis-badge]][travis-url]  
-
+[![Build Status][travis-badge]][travis-url]
+![Lines of Code][lines-codes-badge]  
 Boston Housing Prediction is a python script that can predict the housing prices in boston with different models, the user can choose from.  
 
 ![header](res/img/script_preview_scaled.gif)
@@ -17,22 +17,27 @@ To install the `requirements` for the script do:
 ```sh
 $ pip install -r requirements.txt
 ```
-Download the script `boston-housing-0_1_1.py`. You can also download the files under release.
+
+Download the latest release of the script `boston-housing-X_X_X.py` You can also download the files under release..
 
 ## Usage example
 
-You can run the programm with:
+You can run the programm with(The X stand for the version):
 ```sh
-$ py boston-housing-0_1_1.py linear_regression
+$ py boston-housing-X_X_X.py linear_regression
 ```  
 To see the help(for extra options) do:
 ```sh
-$ py boston-housing-0_1_1.py -h
+$ py boston-housing-X_X_X.py -h
 ```  
 
 <!--_For more examples and usage, please refer to the [Wiki][wiki]._-->
 
 ## Release History
+
+*   0.1.2
+    *   bugfixes #4, #5
+    *   serperated code in diffeent files for more clarity. See code folder
 
 *   0.1.1
     *   added functionality to load models without training
@@ -81,3 +86,4 @@ Distributed under the MIT license. See ``LICENSE`` for more information.
 [license-url]: https://github.com/LuposX/BostonHousingPrediction/blob/master/LICENSE
 [travis-url]: https://travis-ci.com/LuposX/BostonHousingPrediction
 [travis-badge]: https://travis-ci.com/LuposX/BostonHousingPrediction.svg?branch=master
+[lines-codes-badge]: https://tokei.rs/b1/github/LuposX/BostonHousingPrediction?category=code
