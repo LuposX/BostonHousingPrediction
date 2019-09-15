@@ -34,6 +34,10 @@ $ py boston-housing-0_1_1.py -h
 
 ## Release History
 
+*   0.1.2
+    *   bugfixes #4, #5
+    *   serperated code in diffeent files. See code folder
+
 *   0.1.1
     *   added functionality to load models without training
     *   plots are now outsourced and handled by a different kernel
