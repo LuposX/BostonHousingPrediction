@@ -17,17 +17,17 @@ To install the `requirements` for the script do:
 ```sh
 $ pip install -r requirements.txt
 ```
-Download the script `boston-housing-0_1_1.py`.
+Download the latest release of the script `boston-housing-X_X_X.py`.
 
 ## Usage example
 
-You can run the programm with:
+You can run the programm with(The X stand for the version):
 ```sh
-$ py boston-housing-0_1_1.py linear_regression
+$ py boston-housing-X_X_X.py linear_regression
 ```  
 To see the help(for extra options) do:
 ```sh
-$ py boston-housing-0_1_1.py -h
+$ py boston-housing-X_X_X.py -h
 ```  
 
 <!--_For more examples and usage, please refer to the [Wiki][wiki]._-->
