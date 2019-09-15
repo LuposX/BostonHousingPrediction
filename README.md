@@ -1,2 +1,2 @@
 # BostonHousingPrediction
-A programm that predicts house prices with different models
+This branch is for Backups/previous versions of the program.
