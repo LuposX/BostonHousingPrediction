@@ -3,7 +3,7 @@ Author: Lupos
 Started: 08.09.2019
 Lang: Phyton
 Description: Prediction of boston housing market with lienar - regression.
-version: 0.1.1
+version: 0.1.2
 
 Dataset:
 Housing Values in Suburbs of Boston
@@ -32,8 +32,6 @@ import operator
 # TODO: fix train and test loss
 
 # GLOBAL VARIABLES
-global checker_dataset_exist  # gets set on true from get_Data()
-checker_dataset_exist = False
 # pool = multiprocessing.Pool(3) # set the pool(how many kernels) are used for multiprocessing
 visualize_process = None  # gets later used from multiprocessing
 
@@ -49,17 +47,14 @@ def get_Data() -> object:
     try:
         if path.isfile("boston_housing.csv"):
             df = pd.read_csv("boston_housing.csv")
-            checker_dataset_exist = True
             return df
     except:
         try:
             if path.isfile("housing.csv"):
                 df = pd.read_csv("housing.csv")
-                checker_dataset_exist = True
                 return df
         except FileNotFoundError:
             print("oops, file doesn't exist")
-            checker_dataset_exist = False
 
 
 # used to remove trailing whitespace from file
@@ -75,7 +70,7 @@ def visualize_Data(df: object) -> None:
 
     # set number of subplots and size
     axes = plt.subplots(2, 2, figsize=(12, 9))
-    axes = axes.flatten()
+    axes = axes[1].flatten()  # axes[1] because axes is a tulpl and figure is in it
 
     # draw kdeplot
     sns.kdeplot(df["MEDV"], shade=True, cut=0, ax=axes[0], color="blue")
@@ -348,6 +343,10 @@ class LinearRegression:
                             visualize_process.terminate()
                         except Exception as e:
                             print("Error: ", str(e))
+                    print(" ")
+                    print("Please be noted that this value is a estimate. I am not liable responsibly.")
+                    print("For more information about the copyright of this programm look at my Github repository: ")
+                    print("github.com/LuposX/BostonHousingPrediction")
                     sys.exit(0)  # exit the script sucessful
                     break
                 else:
@@ -358,16 +357,6 @@ class LinearRegression:
                     print("The model predicted that a house with a RM value of: " + str(rm_input) + ".")
                     print("Is worth about: " + str(round(self.pred_target, 4)) + " in 10,000$(GER 10.000$).")
                     print(" ")
-                    print("Please be noted that this value is a estimate. I am not liable responsibly.")
-                    print("For more information about the copyright of this programm look at my Github repository: ")
-                    print("github.com/LuposX/BostonHousingPrediction")
-                    if visualize_process.is_alive():
-                        try:
-                            visualize_process.terminate()
-                        except Exception as e:
-                            print("Error: ", str(e))
-                    sys.exit(0)  # exit the script sucessful
-                    break
             except ValueError:
                 print("Invalid Input!")
 
@@ -414,7 +403,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     # check if the dataset exist
-    if not checker_dataset_exist:
+    if not is_non_zero_file():
        download_dataset()
        df_data = get_Data()
     else:
