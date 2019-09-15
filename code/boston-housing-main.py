@@ -18,13 +18,6 @@ import multiprocessing as mp
 import random
 import sys
 
-import matplotlib.pyplot as plt
-import numpy as np
-import pandas as pd
-import seaborn as sns
-import urllib
-import operator
-
 # My Files that get imported
 from linear_regression_libary import LinearRegression
 from misc_libary import *
