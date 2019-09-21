@@ -17,19 +17,21 @@ To install the the script do:
 ```sh
 $ pip install boston-housing-prediction
 ```
-
-Alternatively download the latest release of the script `boston-housing-X_X_X.py`. Open the zip and in the `code` folder you can see the scripts.
+The script is saved in here: `python_location\Scripts\boston-housing-main.py`.   
+Alternatively download the latest release of the script `boston-housing-X_X_X.py`. Open the zip and in the `code` folder you can see the script and its libaries.
 
 ## Usage example
 
-You can run the programm with(The X stand for the version):
+You can run the programm with:
 ```sh
-$ py boston-housing-X_X_X.py model
+$ py boston-housing-main.py model_name
 ```  
 To see the help(for extra options) do:
 ```sh
-$ py boston-housing-X_X_X.py -h
+$ py boston-housing-main.py -h
 ```  
+
+If you get a error message like `[Errno 2] No such file or directory`. Navigate to your python folder and go in the `Scripts` folder there you'll find the `boston-housing-main.py`. From that location you can start `boston-housing-main.py`.
 
 <!--_For more examples and usage, please refer to the [Wiki][wiki]._-->
 
