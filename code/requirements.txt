@@ -1,0 +1,13 @@
+certifi
+cycler
+kiwisolver
+matplotlib
+numpy
+pandas
+pyparsing
+python-dateutil
+pytz
+scipy
+seaborn
+six
+wincertstore
