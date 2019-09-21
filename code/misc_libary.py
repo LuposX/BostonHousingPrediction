@@ -2,11 +2,8 @@ import urllib
 import os
 from os import path
 
-from mpl_toolkits.mplot3d import Axes3D
-from mpl_toolkits import mplot3d
 import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import axes3d, Axes3D
-from matplotlib.widgets import Button
+from mpl_toolkits.mplot3d import Axes3D
 
 import pandas as pd
 import seaborn as sns
@@ -263,7 +260,7 @@ def v_model_poly(x_axis, y_axis, weights_bias, data_train, target_train):
         weights_bias[4] * f3 + \
         weights_bias[5] * f3 ** 2 + weights_bias[6] * 1
 
-    surf = ax.plot_surface(f1, f2, Z, alpha=0.3, edgecolors='grey')
+    ax.plot_surface(f1, f2, Z, alpha=0.3, edgecolors='grey')
 
     X = data_train[x_axis]
     Y = data_train[y_axis]
