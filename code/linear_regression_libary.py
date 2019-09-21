@@ -145,4 +145,5 @@ class LinearRegression:
 
     # a getter for the viszulation function
     def getter_viszualtion(self) -> list:
-        return self.w1, self.bias, self.train_loss_history, self.test_loss_history, self.evaluation_time, self.data_train, self.target_train, self.x_train_loose
+        weights_bias = [self.w1, self.bias]
+        return weights_bias, self.train_loss_history, self.test_loss_history, self.evaluation_time, self.data_train, self.target_train, self.x_train_loose

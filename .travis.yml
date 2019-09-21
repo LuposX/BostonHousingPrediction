@@ -4,10 +4,8 @@ python:
   - "3.6"      # current default Python on Travis CI
   - "3.7"
   - "3.7-dev"  # 3.7 development branch
- # command to install dependencies
 install:
   - pip install -r requirements.txt
 # command to run tests
 script:
-  - python boston-housing-0_1_2.py linear_regression < testing.txt
   - python code/boston-housing-main.py linear_regression < testing.txt
