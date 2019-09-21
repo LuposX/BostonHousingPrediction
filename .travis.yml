@@ -1,5 +1,6 @@
 language: python
 python:
+  - "3.4"
   - "3.5"
   - "3.6"      # current default Python on Travis CI
   - "3.7"
@@ -9,5 +10,4 @@ install:
   - pip install -r requirements.txt
 # command to run tests
 script:
-  - python boston-housing-0_2_0.py linear_regression < testing.txt
   - python code/boston-housing-main.py linear_regression < testing.txt
