@@ -34,6 +34,8 @@ $ py boston-housing-X_X_X.py -h
 <!--_For more examples and usage, please refer to the [Wiki][wiki]._-->
 
 ## Release History
+*   0.2.0
+    *   release of polynomial_model
 
 *   0.1.2
     *   bugfixes #4, #5
