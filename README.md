@@ -1,5 +1,5 @@
 # Boston Housing Prediction
-> Predict Housing prices in boston with different Models.   
+> Predict Housing prices in boston with different Models. This repository is mainly for learning purpose and NOT for comercial-use.   
   
 [![License][license-badge]][license-url]
 [![Codacy Badge][codacy-badge]][codacy-url]
@@ -12,31 +12,33 @@ Boston Housing Prediction is a python script that can predict the housing prices
 ## Installation
 You need to have `python >= 3.5` installed.
 
-To install the `requirements` for the script do:  
+To install the the script do:  
 
 ```sh
-$ pip install -r requirements.txt
+$ pip install boston-housing-prediction
 ```
-
-Download the latest release of the script `boston-housing-X_X_X.py` You can also download the script under release.
+The script is saved in here: `python_location\Scripts\boston-housing-main.py`.   
+Alternatively download the latest release of the script `boston-housing-X_X_X.py`. Open the zip and in the `code` folder you can see the script and its libaries.
 
 ## Usage example
 
-You can run the programm with(The X stand for the version):
+You can run the programm with:
 ```sh
-$ py boston-housing-X_X_X.py linear_regression
+$ py boston-housing-main.py model_name
 ```  
 To see the help(for extra options) do:
 ```sh
-$ py boston-housing-X_X_X.py -h
+$ py boston-housing-main.py -h
 ```  
+
+If you get a error message like `[Errno 2] No such file or directory`. Navigate to your python folder and go in the `Scripts` folder there you'll find the `boston-housing-main.py`. From that location you can start `boston-housing-main.py`.
 
 <!--_For more examples and usage, please refer to the [Wiki][wiki]._-->
 
 ## Release History
 *   0.2.0
     *   release of polynomial_model
-
+    
 *   0.1.2
     *   bugfixes #4, #5
     *   serperated code in diffeent files for more clarity. See code folder
