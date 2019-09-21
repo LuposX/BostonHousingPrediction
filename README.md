@@ -12,19 +12,19 @@ Boston Housing Prediction is a python script that can predict the housing prices
 ## Installation
 You need to have `python >= 3.5` installed.
 
-To install the `requirements` for the script do:  
+To install the the script do:  
 
 ```sh
-$ pip install -r requirements.txt
+$ pip install boston-housing-prediction
 ```
 
-Download the latest release of the script `boston-housing-X_X_X.py` You can also download the script under release.
+Alternatively download the latest release of the script `boston-housing-X_X_X.py`. Open the zip and in the `code` folder you can see the scripts.
 
 ## Usage example
 
 You can run the programm with(The X stand for the version):
 ```sh
-$ py boston-housing-X_X_X.py linear_regression
+$ py boston-housing-X_X_X.py model
 ```  
 To see the help(for extra options) do:
 ```sh
