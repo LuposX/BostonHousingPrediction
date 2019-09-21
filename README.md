@@ -73,7 +73,7 @@ If you get a error message like `[Errno 2] No such file or directory`. Navigate 
 
 Distributed under the MIT license. See ``LICENSE`` for more information.
 
-[https://github.com/LuposX](https://github.com/LuposX)
+[LICENSE Boston-housing](https://github.com/LuposX/BostonHousingPrediction/blob/master/LICENSE)
 
 ## Contributing
 
