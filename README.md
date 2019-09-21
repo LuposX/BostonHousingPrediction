@@ -1,5 +1,5 @@
 # Boston Housing Prediction
-> Predict Housing prices in boston with different Models.   
+> Predict Housing prices in boston with different Models. This repository is mainly for learning purpose and NOT for comercial-use.   
   
 [![License][license-badge]][license-url]
 [![Codacy Badge][codacy-badge]][codacy-url]
