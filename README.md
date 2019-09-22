@@ -18,7 +18,7 @@ To install the the script do:
 $ pip install boston-housing-prediction
 ```
 The script is saved in here: `python_location\Scripts\boston-housing-main.py`.   
-Alternatively download the latest release of the script `boston-housing-X_X_X.py`. Open the zip and in the `code` folder you can see the script and its libaries.
+Alternatively download the latest release of `boston-housing`. Open the zip and in the `code` folder you can see the script and its libaries.
 
 ## Usage example
 
@@ -58,14 +58,15 @@ If you get a error message like `[Errno 2] No such file or directory`. Navigate 
 
 ## Roadmap (planned updates)
 
-*   Add more models
+*   Add more models:
+    
+    *   linear regression :heavy_check_mark:
+    *   polynomial_regression :heavy_check_mark:
+    *   normal equation :x:
+    *   svm :x:
+    *   neural network :x:
 
-    *   polynomial regression
-    *   normal equation
-    *   svm
-    *   neural network
-
-*   Upload pre-trained models 
+*   Upload pre-trained models :x: 
 
 ## Meta
 
