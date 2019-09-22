@@ -58,13 +58,15 @@ If you get a error message like `[Errno 2] No such file or directory`. Navigate 
 
 ## Roadmap (planned updates)
 
-*   Add more models
+*   Add more models:
+    
+    *   linear regression :heavy_check_mark:
+    *   polynomial_regression :heavy_check_mark:
+    *   normal equation :x:
+    *   svm :x:
+    *   neural network :x:
 
-    *   normal equation
-    *   svm
-    *   neural network
-
-*   Upload pre-trained models 
+*   Upload pre-trained models :x: 
 
 ## Meta
 
