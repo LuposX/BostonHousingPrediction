@@ -7,9 +7,6 @@
 ![Lines of Code][lines-codes-badge]  
 Boston Housing Prediction is a python script that can predict the housing prices in boston with different models, the user can choose from.  
 
-![header](res/img/script_preview_scaled.gif)
-
-
 ## Installation
 You need to have `python >= 3.5` installed.
 
@@ -34,3 +31,12 @@ $ py boston-housing-main.py -h
 
 For more information please visit my github repository:  
 [My Github](https://github.com/LuposX/BostonHousingPrediction/)
+
+<!-- Markdown link & img dfn's -->
+[codacy-badge]: https://api.codacy.com/project/badge/Grade/089e59afa6a44e629b1267f8abaad038
+[codacy-url]:https://app.codacy.com/manual/LuposX/BostonHousingPrediction/dashboard
+[license-badge]: https://img.shields.io/github/license/LuposX/sentdex_fixed_market_stock
+[license-url]: https://github.com/LuposX/BostonHousingPrediction/blob/master/LICENSE
+[travis-url]: https://travis-ci.com/LuposX/BostonHousingPrediction
+[travis-badge]: https://travis-ci.com/LuposX/BostonHousingPrediction.svg?branch=master
+[lines-codes-badge]: https://tokei.rs/b1/github/LuposX/BostonHousingPrediction?category=code
