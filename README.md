@@ -60,7 +60,6 @@ If you get a error message like `[Errno 2] No such file or directory`. Navigate 
 
 *   Add more models
 
-    *   polynomial regression
     *   normal equation
     *   svm
     *   neural network
