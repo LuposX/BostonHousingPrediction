@@ -29,8 +29,8 @@ from misc_libary import *
 # pool = multiprocessing.Pool(3) # set the pool(how many kernels) are used for multiprocessing
 visualize_process = None  # gets later used from multiprocessing
 
-if __name__ == "__main__":
-    # create our parser for commands from command line
+def main():
+	  # create our parser for commands from command line
     parser = argparse.ArgumentParser(description="This is a program which creates a prediction model for the boston "
                                                  "housing dataset.")
 
@@ -168,3 +168,7 @@ if __name__ == "__main__":
         print("Target and it's meaning")
         print("-----------------------------------------")
         print("MEDV: median value of owner-occupied homes in 10,000$(GER: 10.000$).")
+		
+if __name__ == "__main__":
+	main()
+	
