@@ -3,7 +3,7 @@ Author: Lupos
 Started: 08.09.2019
 Lang: Phyton
 Description: Prediction of boston housing market prices.
-version: 0.2.0
+version: 0.2.1
 
 Dataset:
 Housing Values in Suburbs of Boston
@@ -12,6 +12,9 @@ RM: average number of rooms per dwelling(Wohnung)
 LSTAT: percentage of population considered lower status
 PTRATIO: pupil-teacher ratio by town
 MEDV: median value of owner-occupied homes in 10.000$
+
+Latest change:
+- added Normalization for data
 '''
 import argparse
 import multiprocessing as mp
@@ -29,8 +32,9 @@ from misc_libary import *
 # pool = multiprocessing.Pool(3) # set the pool(how many kernels) are used for multiprocessing
 visualize_process = None  # gets later used from multiprocessing
 
+
 def main():
-	  # create our parser for commands from command line
+    # create our parser for commands from command line
     parser = argparse.ArgumentParser(description="This is a program which creates a prediction model for the boston "
                                                  "housing dataset.")
 
@@ -38,8 +42,8 @@ def main():
     parser.add_argument("model", help="Choose which model you want to use for prediction.",
                         type=str, choices=["linear_regression", "polynomial_regression"])
     parser.add_argument("--infile", help="If file specified model will load weights from it."
-                                       "Else it will normally train.(default: no file loaded)"
-                        , metavar="FILE", type=str) # type=argparse.FileType('r', encoding='UTF-8')
+                                         "Else it will normally train.(default: no file loaded)"
+                        , metavar="FILE", type=str)  # type=argparse.FileType('r', encoding='UTF-8')
     # implemented
     parser.add_argument("--v_data", metavar="VISUALIZE_DATA",
                         help="Set it to True if you want to get a visualization of the data.(default: %(default)s)",
@@ -52,11 +56,12 @@ def main():
     parser.add_argument("--v_model", metavar="VISUALIZE_MODEL",
                         help="Set it to True if you want to get a visualization of the model.(default: %(default)s)",
                         type=bool, default=False)
-    parser.add_argument("--fd",  metavar="FEEDBACK",
+    parser.add_argument("--fd", metavar="FEEDBACK",
                         help="Set how much feedback you want.(Choices: %(choices)s)",
                         type=str, choices=["full", "intermediate", "weak", "debug"], default="immediate")
     # implemented
-    parser.add_argument("--save", metavar="SAVE_MODEL", help="Set it to True if you want to save the model after training.(default: %(default)s)",
+    parser.add_argument("--save", metavar="SAVE_MODEL",
+                        help="Set it to True if you want to save the model after training.(default: %(default)s)",
                         type=bool, default=False)
 
     parser.add_argument("--h_features", metavar="HELP_FEATURES",
@@ -76,13 +81,19 @@ def main():
         df_data = get_Data()
     else:
         df_data = get_Data()
+
+    # df variables
+    df_arg_list = preproc_data(df_data, args)
+    df_args = df_arg_list[0:2]
+    args_normalization = df_arg_list[2:]
+
     # check arguments programm got started with
     if args.model == "linear_regression" and not args.h_features:
         print(" ")
         print("Linear-regression")
         print("--------------------------------------")
 
-        model = LinearRegression(preproc_data(df_data), args)  # create our model
+        model = LinearRegression(df_args, args)  # create our model
 
         if not args.infile:
             model.train()  # train our model
@@ -94,7 +105,7 @@ def main():
                     for line in chomped_lines(infile):
                         file_list.append(line)
             except FileNotFoundError as e:
-                print("Errot file not found: ", str(e))
+                print("Error file not found: ", str(e))
                 if visualize_process.is_alive():
                     visualize_process.terminate()
                 sys.exit(1)  # exit the script sucessful
@@ -105,25 +116,25 @@ def main():
             except ValueError as e:
                 print(str(e))
 
-
         # if save parameter is true model gets saved
         if args.save and not args.infile:
             model.save()
 
         random.seed(123)  # needed to fix some issued with multiprocessing
         list_process_arg = model.getter_viszualtion()
-        visualize_process = mp.Process(target=visualize, args=(args, df_data, list_process_arg))  # use "args" if arguments are needed
+        visualize_process = mp.Process(target=visualize,
+                                       args=(args, df_data, list_process_arg))  # use "args" if arguments are needed
         visualize_process.start()
         # model.visualize(args, df_data)  # visualize our model
         if args.predict_on:
-            model.predic(visualize_process)  # make preictions with the model
+            model.predic(visualize_process, args_normalization)  # make preictions with the model
 
     elif args.model == "polynomial_regression":
         print(" ")
         print("Polynomial-regression")
         print("--------------------------------------")
 
-        model_poly = PolynomialRegression(preproc_data(df_data), args)    # create our model
+        model_poly = PolynomialRegression(df_args, args)  # create our model
 
         if not args.infile:
             model_poly.train()  # train our model
@@ -155,7 +166,7 @@ def main():
                                        args=(args, df_data, list_process_arg))  # use "args" if arguments are needed
         visualize_process.start()
         if args.predict_on:
-            model_poly.predic(visualize_process)  # make preictions with the model
+            model_poly.predic(visualize_process, args_normalization)  # make preictions with the model
 
     elif args.h_features:
         print(" ")
@@ -167,8 +178,8 @@ def main():
         print(" ")
         print("Target and it's meaning")
         print("-----------------------------------------")
-        print("MEDV: median value of owner-occupied homes in 10,000$(GER: 10.000$).")
-		
+        print("MEDV: median value of owner-occupied homes in 100,000$(GER: 100.000$).")
+
+
 if __name__ == "__main__":
-	main()
-	
+    main()

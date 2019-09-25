@@ -10,7 +10,7 @@ class PolynomialRegression:
 
         # how man epoch we train
         self.epochs = 30
-        self.alpha = 0.000000008
+        self.alpha = 0.008
         self.train_loss_history = []
         self.test_loss_history = []
         self.x_train_loose = []
@@ -167,9 +167,11 @@ class PolynomialRegression:
         writeFile.close()
 
     # predicting with the model
-    def predic(self, visualize_process) -> None:
-        time.sleep(
-            1)  # sleeps so that the function visualize()(which is seperate process through multiprocessing) has enough time to print the output correctly
+    def predic(self, visualize_process, args_normalization) -> None:
+        df_range = args_normalization[0]
+        df_mean = args_normalization[1]
+
+        time.sleep(1)  # sleeps so that the function visualize()(which is seperate process through multiprocessing) has enough time to print the output correctly
         self.pred_target = 0
         print(" ")
         print("Prediction")

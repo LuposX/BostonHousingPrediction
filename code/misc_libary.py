@@ -3,6 +3,7 @@ import os
 from os import path
 
 import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import axes3d, Axes3D   # needed
 
 import pandas as pd
 import seaborn as sns
@@ -112,18 +113,46 @@ def download_dataset() -> None:
             print("Error: ", str(e))
 
 
-def preproc_data(df: object) -> None:
-    # regularization and rounding on the 4th decimal point
-    df[["MEDV"]] = round(df[["MEDV"]] / 10000, 4)
+def preproc_data(df: object, args) -> list:
+    # money in 100,000
+    df[["MEDV"]] = df[["MEDV"]] / 100000
 
-    # shuffling data
-    df = df.sample(frac=1).reset_index(drop=True)
+    if args.model == "linear_regression":
+        df_new = df[["RM", "MEDV"]]
 
-    # split in training and test data
-    df_train = df[:380]
-    df_test = df[381:]
+        # normalization variables for linear regression
+        df_new_range = (df_new.max() - df_new.min())
+        df_new_mean = df_new.mean()
 
-    return df_train, df_test
+        df_new = (df_new - df_new_mean) / df_new_range
+
+        # shuffling data
+        df_new = df_new.sample(frac=1).reset_index(drop=True)
+
+        # split in training and test data
+        df_new_train = df_new[:380]
+        df_new_test = df_new[381:]
+
+        return df_new_train, df_new_test, df_new_range, df_new_mean
+
+    elif args.model == "polynomial_regression":
+        # normalization variables for polynomial regression
+        df_range = df.max() - df.min()
+        df_mean = df.mean()
+
+        df = (df - df.mean()) / (df.max() - df.min())
+
+        # shuffling data
+        df = df.sample(frac=1).reset_index(drop=True)
+
+        # split in training and test data
+        df_train = df[:380]
+        df_test = df[381:]
+
+        return df_train, df_test, df_range, df_mean
+
+    else:
+        print("something went wrong in data preprocessing.")
 
 
 def hypothesis_pol(weights, f1, f2, f3, bias):
@@ -175,9 +204,9 @@ def visualize(args, df_data, parameter_list: list) -> None:
     # get points for line
     X = []
     Y = []
-    for i in range(3, 11):
-        X.append(i)
-        Y.append(weights_bias[0] * i + weights_bias[1])
+    for i in range(-10, 14):
+        X.append(i * 0.1)
+        Y.append(weights_bias[0] * (i * 0.1) + weights_bias[1])
 
 
     # plot our descion border and datapoints
@@ -249,9 +278,9 @@ def v_model_poly(x_axis, y_axis, weights_bias, data_train, target_train):
     fig = plt.figure(figsize=(10, 7))
     ax = fig.gca(projection='3d')
 
-    f1 = np.linspace(1, 10, 10)
-    f2 = np.linspace(1, 40, 10)
-    f3 = np.linspace(1, 40, 10)
+    f1 = np.arange(-1, 1, 0.1)
+    f2 = np.arange(-1, 1, 0.1)
+    f3 = np.arange(-1, 1, 0.1)
 
     f1, f2 = np.meshgrid(f1, f2)
     # z corosponds to medv
@@ -278,9 +307,9 @@ def v_model_poly(x_axis, y_axis, weights_bias, data_train, target_train):
     ax.set_zlabel("MEDV")
 
     # hide the ticks of the label
-    ax.axes.xaxis.set_ticklabels([])
-    ax.axes.yaxis.set_ticklabels([])
-    ax.axes.zaxis.set_ticklabels([])
+    #ax.axes.xaxis.set_ticklabels([])
+    #ax.axes.yaxis.set_ticklabels([])
+    #ax.axes.zaxis.set_ticklabels([])
 
     # hide the grid
     ax.grid(False)
