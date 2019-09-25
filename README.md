@@ -36,6 +36,9 @@ If you get a error message like `[Errno 2] No such file or directory`. Navigate 
 <!--_For more examples and usage, please refer to the [Wiki][wiki]._-->
 
 ## Release History
+*   0.2.1
+    *   add nomralization for data
+    
 *   0.2.0
     *   release of polynomial_model
     

@@ -11,7 +11,7 @@ class LinearRegression:
 
         # how man epoch we train
         self.epochs = 30
-        self.alpha = 0.03
+        self.alpha = 0.3
         self.train_loss_history = []
         self.test_loss_history = []
         self.x_train_loose = []
@@ -104,7 +104,11 @@ class LinearRegression:
         writeFile.close()
 
     # predicting with the model
-    def predic(self, visualize_process) -> None:
+    def predic(self, visualize_process, args_normalization) -> None:
+        df_range = args_normalization[0]
+        df_mean = args_normalization[1]
+
+
         time.sleep(1)  # sleeps so that the function visualize()(which is seperate process through multiprocessing) has enough time to print the output correctly
         self.pred_target = 0
         print(" ")
@@ -133,12 +137,14 @@ class LinearRegression:
                     sys.exit(0)  # exit the script sucessful
                     break
                 else:
-                    rm_input = round(float(rm_input), 4)
+                    rm_input = round(float(rm_input), 20)
                     self.pred_target = self.w1 * rm_input + self.bias  # predicting
+
+                    output_pred = (self.pred_target * df_range) + df_mean
 
                     print(" ")
                     print("The model predicted that a house with a RM value of: " + str(rm_input) + ".")
-                    print("Is worth about: " + str(round(self.pred_target, 4)) + " in 10,000$(GER 10.000$).")
+                    print("Is worth about: " + str(round(output_pred, 4)) + " in 100,000$(GER 100.000$).")
                     print(" ")
             except ValueError:
                 print("Invalid Input!")
