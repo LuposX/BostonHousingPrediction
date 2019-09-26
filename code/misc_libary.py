@@ -114,20 +114,23 @@ def download_dataset() -> None:
 
 
 def preproc_data(df: object, args) -> list:
-    # money in 100,000
-    df[["MEDV"]] = df[["MEDV"]] / 100000
+    # money in 10,000
+    df[["MEDV"]] = df[["MEDV"]] / 10000
 
     if args.model == "linear_regression":
-        df_new = df[["RM", "MEDV"]]
+        # split data and target
+        df_new = df #df[["RM"]]
 
         # normalization variables for linear regression
-        df_new_range = (df_new.max() - df_new.min())
-        df_new_mean = df_new.mean()
+        df_new_range = df_new.max() - df_new.min()
+        df_new_mean = df_new.std(ddof=1)
 
         df_new = (df_new - df_new_mean) / df_new_range
 
         # shuffling data
         df_new = df_new.sample(frac=1).reset_index(drop=True)
+
+        #df_new["MEDV"] = df["MEDV"]  # we dont want to normalize our target so here we add data and target together in one dataset again.
 
         # split in training and test data
         df_new_train = df_new[:380]
@@ -136,20 +139,25 @@ def preproc_data(df: object, args) -> list:
         return df_new_train, df_new_test, df_new_range, df_new_mean
 
     elif args.model == "polynomial_regression":
-        # normalization variables for polynomial regression
-        df_range = df.max() - df.min()
-        df_mean = df.mean()
+        # split data and target
+        df_new = df # df[["RM", "LSTAT", "PTRATIO"]]
 
-        df = (df - df.mean()) / (df.max() - df.min())
+        # normalization variables for polynomial regression
+        df_new_range = df_new.max() - df_new.min()
+        df_new_mean = df_new.mean()
+
+        df_new = (df_new - df_new_mean) / df_new_range
 
         # shuffling data
-        df = df.sample(frac=1).reset_index(drop=True)
+        df_new = df_new.sample(frac=1).reset_index(drop=True)
+
+        # df_new["MEDV"] = df["MEDV"]  # we dont want to normalize our target so here we add data and target together in one dataset again.
 
         # split in training and test data
-        df_train = df[:380]
-        df_test = df[381:]
+        df_new_train = df_new[:380]
+        df_new_test = df_new[381:]
 
-        return df_train, df_test, df_range, df_mean
+        return df_new_train, df_new_test, df_new_range, df_new_mean
 
     else:
         print("something went wrong in data preprocessing.")
@@ -278,9 +286,9 @@ def v_model_poly(x_axis, y_axis, weights_bias, data_train, target_train):
     fig = plt.figure(figsize=(10, 7))
     ax = fig.gca(projection='3d')
 
-    f1 = np.arange(-1, 1, 0.1)
-    f2 = np.arange(-1, 1, 0.1)
-    f3 = np.arange(-1, 1, 0.1)
+    f1 = np.arange(-0.7, 1.2, 0.1)
+    f2 = np.arange(-0.7, 1.2, 0.1)
+    f3 = np.arange(-0.7, 1.2, 0.1)
 
     f1, f2 = np.meshgrid(f1, f2)
     # z corosponds to medv

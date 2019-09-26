@@ -138,13 +138,16 @@ class LinearRegression:
                     break
                 else:
                     rm_input = round(float(rm_input), 20)
-                    self.pred_target = self.w1 * rm_input + self.bias  # predicting
+                    rm_input_norm = (rm_input - df_mean[0]) / df_range[0]  # normalizing input
 
-                    output_pred = (self.pred_target * df_range) + df_mean
+                    self.pred_target = self.w1 * rm_input_norm + self.bias  # predicting
+
+                    # denormalization of output
+                    denorm_pred_target = (self.pred_target * df_range[1]) + df_mean[1]
 
                     print(" ")
                     print("The model predicted that a house with a RM value of: " + str(rm_input) + ".")
-                    print("Is worth about: " + str(round(output_pred, 4)) + " in 100,000$(GER 100.000$).")
+                    print("Is worth about: " + str(round(denorm_pred_target, 6)) + " in 10,000$(GER 10.000$).")
                     print(" ")
             except ValueError:
                 print("Invalid Input!")

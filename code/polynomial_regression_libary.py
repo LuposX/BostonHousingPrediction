@@ -10,17 +10,19 @@ class PolynomialRegression:
 
         # how man epoch we train
         self.epochs = 30
-        self.alpha = 0.008
+        self.alpha = 0.005
         self.train_loss_history = []
         self.test_loss_history = []
         self.x_train_loose = []
 
         # split in target and data
+        # print(df[0].info())
+        # print("-----------------------")
         self.data_train = df[0].iloc[:,  df[0].columns != "MEDV"].reset_index(drop=True)    # the ":" stands for every element in there
         self.data_test = df[1].iloc[:,  df[1].columns != "MEDV"].reset_index(drop=True)
+        # print(self.data_train.info())
         self.target_train = df[0]["MEDV"].tolist()
         self.target_test = df[1]["MEDV"].tolist()
-
         # misc
         self.evaluation_time = 0
         self.args = args
@@ -32,8 +34,8 @@ class PolynomialRegression:
         #print(weights[0])
         # pred = round(weights[0] * f1 + weights[1] * f1 ** 2 + weights[2] * f2 + weights[3] * f2 ** 2 + \
         #              weights[4] * f3 + weights[5] * f3 ** 2 + weights[6] * bias, 10)
-        pred = round(weights[0] * f1 + weights[1] * f1 ** 2 + weights[2] * f1 ** 3 + weights[3] * f2 + weights[4] * f2 ** 2 + \
-                          weights[5] * f2 ** 3 + weights[6] * f3 + weights[7] * f3 ** 2 + weights[8] * f3 ** 3 + weights[9] * bias, 10)
+        pred = weights[0] * f1 + weights[1] * f1 ** 2 + weights[2] * f1 ** 3 + weights[3] * f2 + weights[4] * f2 ** 2 + \
+                          weights[5] * f2 ** 3 + weights[6] * f3 + weights[7] * f3 ** 2 + weights[8] * f3 ** 3 + weights[9] * bias
         return pred
 
     # training our model
@@ -213,7 +215,22 @@ class PolynomialRegression:
                 lstat_input = round(float(lstat_input), 4)
                 ptratio_input = round(float(ptratio_input), 4)
 
-                self.pred_target = self.hypothesis(self.weights, rm_input, lstat_input, ptratio_input, 1)
+                # normalizing input
+                rm_input_norm = (rm_input - df_mean[0]) / df_range[0]
+                lstat_input_norm = (lstat_input - df_mean[1]) / df_range[1]
+                ptratio_input_norm = (ptratio_input - df_mean[2]) / df_range[2]
+
+                self.pred_target = self.hypothesis(self.weights, rm_input_norm, lstat_input_norm, ptratio_input_norm, 1)
+                print(self.pred_target)
+
+                # denormalization of output
+                denorm_pred_target = (self.pred_target * df_range[3]) + df_mean[3]
+
+                # print(self.pred_target)
+                # print("---------------")
+                # print(df_range)
+                # print("---------------")
+                # print(df_mean)
 
                 print(" ")
                 print("The model predicted that a house with the values: ")
@@ -221,7 +238,7 @@ class PolynomialRegression:
                 print("LSTAT :" + str(lstat_input))
                 print("PTRATIO :" + str(ptratio_input))
                 print(" ")
-                print("Is worth about: " + str(round(self.pred_target, 4)) + " in 10,000$(GER 10.000$).")
+                print("Is worth about: " + str(round(denorm_pred_target, 6)) + " in 10,000$(GER 10.000$).")
                 print(" ")
             except ValueError:
                 print("Invalid Input!")
