@@ -18,7 +18,7 @@ To install the the script do:
 $ pip install boston_housing_prediction
 ```
 
-Alternatively download the latest release of `boston-housing`. Open the zip and in the `code` or `boston_housing_prediction` folder(fodlers have different names in different versions) you can see the script and its libaries.
+Alternatively download the latest release of `boston-housing`. Open the zip and in the `code` or `boston_housing_prediction` folder(folders have different names in different versions) you can see the script and its libaries.
 
 ## Usage example
 
