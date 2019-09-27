@@ -1,0 +1,29 @@
+﻿1. create
+create wheel: python setup.py bdist_wheel
+create source: python setup.py sdist
+
+2. install
+python -m pip install
+
+3. run
+python -m boston_housing_prediction
+
+4. upload
+python -m twine upload dist/*
+--------------------------------------------------------
+Folder Hierarchy:
+├──LICENSE
+├──README_PYPI.md
+├──requirements.txt
+├──setup.py
+└──boston_housing_prediction
+	├──__init__.py
+	├──__main__.py
+	├──boston_main.py
+	├──linear_regression_libary.py
+	├──misc_libary.py
+	├──polynomial_regression_libary.py
+
+--------------------------------------------------------
+Links:
+https://dzone.com/articles/executable-package-pip-install

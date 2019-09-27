@@ -13,18 +13,18 @@ You need to have `python >= 3.5` installed.
 To install the the script do:  
 
 ```sh
-$ pip install boston-housing-prediction
+$ pip install boston_housing_prediction
 ```
 
 ## Usage example
 
 You can run the programm with:
 ```sh
-$ py boston-housing-main.py model_name
+$ python -m boston_housing_prediction model_name
 ```  
 To see the help(for extra options) do:
 ```sh
-$ py boston-housing-main.py -h
+$ python -m boston_housing_prediction -h
 ```  
 
 ## More Infomation

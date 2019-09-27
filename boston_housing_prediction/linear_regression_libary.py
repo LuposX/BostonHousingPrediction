@@ -1,5 +1,5 @@
 import time
-from misc_libary import loss
+from boston_housing_prediction.misc_libary import loss
 import sys
 import csv
 
