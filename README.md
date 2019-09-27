@@ -17,8 +17,8 @@ To install the the script do:
 ```sh
 $ pip install boston_housing_prediction
 ```
-The script is saved in here: `python_location\Scripts\boston-housing-main.py`.   
-Alternatively download the latest release of `boston-housing`. Open the zip and in the `code` folder you can see the script and its libaries.
+
+Alternatively download the latest release of `boston-housing`. Open the zip and in the `code` or `boston_housing_prediction` folder(fodlers have different names in different versions) you can see the script and its libaries.
 
 ## Usage example
 
@@ -30,8 +30,6 @@ To see the help(for extra options) do:
 ```sh
 $ python -m boston_housing_prediction -h
 ```  
-
-If you get a error message like `[Errno 2] No such file or directory`. Navigate to your python folder and go in the `Scripts` folder there you'll find the `boston-housing-main.py`. From that location you can start `boston-housing-main.py`.
 
 <!--_For more examples and usage, please refer to the [Wiki][wiki]._-->
 
