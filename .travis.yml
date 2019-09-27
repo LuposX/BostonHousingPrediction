@@ -8,4 +8,5 @@ install:
   - pip install -r requirements.txt
 # command to run tests
 script:
-  - python code/__main__.py linear_regression < testing.txt
+  - python boston_housing_prediction/__main__.py linear_regression < testing_linear.txt
+  - python boston_housing_prediction/__main__.py polynomial_regression < testing_polynomial.txt
