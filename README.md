@@ -35,7 +35,7 @@ $ python -m boston_housing_prediction -h
 
 ## Release History
 *   0.2.1
-    *   add nomralization for data
+    *   add normalization for data
     
 *   0.2.0
     *   release of polynomial_model
