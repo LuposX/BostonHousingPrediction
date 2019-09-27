@@ -18,9 +18,9 @@ Latest change:
 '''
 
 # My Files that get imported
-import boston_housing_prediction.boston_main
+import boston_main
 
 # TODO: fix train and test loss
 
 if __name__ == "__main__":
-    boston_housing_prediction.boston_main.main()
+    boston_main.main()

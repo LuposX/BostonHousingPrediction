@@ -22,9 +22,12 @@ import random
 import sys
 
 # My Files that get imported
-from boston_housing_prediction.linear_regression_libary import LinearRegression
-from boston_housing_prediction.polynomial_regression_libary import PolynomialRegression
-from boston_housing_prediction.misc_libary import *
+# from boston_housing_prediction.linear_regression_libary import LinearRegression
+# from boston_housing_prediction.polynomial_regression_libary import PolynomialRegression
+# from boston_housing_prediction.misc_libary import *
+from linear_regression_libary import LinearRegression
+from polynomial_regression_libary import PolynomialRegression
+from misc_libary import *
 
 # TODO: fix train and test loss
 

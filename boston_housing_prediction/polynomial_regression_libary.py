@@ -1,5 +1,5 @@
 import time
-from boston_housing_prediction.misc_libary import loss
+from misc_libary import loss
 import sys
 
 class PolynomialRegression:
@@ -47,8 +47,10 @@ class PolynomialRegression:
                 epochs = input("Please type the numbers of epoch you want to train: ")
                 print(" ")
                 epochs = int(epochs)
-                self.epochs = epochs
-                break
+                if epochs > 0:
+                    self.epochs = epochs
+                    break
+                print("Please don't input negative numbers :)")
             except ValueError:
                 print("Invalid Input!")
 
@@ -179,41 +181,52 @@ class PolynomialRegression:
         print("Prediction")
         print("------------------------------------")
         print("With this model you can predict how much a house is worth.")
+        print(" ")
         # while true until valid input
         while True:
             try:
-                # get input for our model
-                print("If you want to quit type: 'quit'.")
-                print("Please enter the RM vaule. Values with the type of Int or float are only allowed.")
-                rm_input = input()
+                print('If you want to quit type: "quit".')
+                print('Only Values with the type of "int" or "float" are allowed.')
+                print("Type the Values in the following order: ")
+                print("1.RM 2.LSTAT 3.PTRATIO")
+                input_list = []
+                for i in range(0,3,1):
+                    while True:
+                        input_var = input()
 
-                if rm_input == "quit" or rm_input == "Quit":
-                    if visualize_process.is_alive():
+                        if input_var == "quit" or input_var == "Quit":
+                            if visualize_process.is_alive():
+                                try:
+                                    visualize_process.terminate()
+                                except Exception as e:
+                                    print("Error: ", str(e))
+                            print(" ")
+                            print("Please be noted that this value is a estimate. I am not liable responsibly.")
+                            print("For more information about the copyright of this programm look at my Github repository: ")
+                            print("github.com/LuposX/BostonHousingPrediction")
+                            sys.exit(0)  # exit the script sucessful
+                            break
+
                         try:
-                            visualize_process.terminate()
-                        except Exception as e:
-                            print("Error: ", str(e))
-                    print(" ")
-                    print("Please be noted that this value is a estimate. I am not liable responsibly.")
-                    print(
-                        "For more information about the copyright of this programm look at my Github repository: ")
-                    print("github.com/LuposX/BostonHousingPrediction")
-                    sys.exit(0)  # exit the script sucessful
-                    break
+                            input_var = float(input_var)
+                            if input_var < 0:
+                                print("Please don't enter negative numbers :)")
+                            else:
+                                break
 
+                        except ValueError:
+                            print("Invalid Input :/")
+
+                    input_list.append(input_var)
+
+            except Exception as e:
+                print(str(e))
+
+            try:
                 print(" ")
-
-                print("Please enter the LSTAT vaule. Values with the type of Int or float are only allowed.")
-                lstat_input = input()
-                print(" ")
-
-                print("Please enter the PTRATIO vaule. Values with the type of Int or float are only allowed.")
-                ptratio_input = input()
-                print(" ")
-
-                rm_input = round(float(rm_input), 4)
-                lstat_input = round(float(lstat_input), 4)
-                ptratio_input = round(float(ptratio_input), 4)
+                rm_input = round(float(input_list[0]), 4)
+                lstat_input = round(float(input_list[1]), 4)
+                ptratio_input = round(float(input_list[2]), 4)
 
                 # normalizing input
                 rm_input_norm = (rm_input - df_mean[0]) / df_range[0]
@@ -240,5 +253,6 @@ class PolynomialRegression:
                 print(" ")
                 print("Is worth about: " + str(round(denorm_pred_target, 6)) + " in 10,000$(GER 10.000$).")
                 print(" ")
-            except ValueError:
-                print("Invalid Input!")
+
+            except Exception as e:
+                print("Someting went wrong: ", str(e))

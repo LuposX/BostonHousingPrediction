@@ -1,5 +1,5 @@
 import time
-from boston_housing_prediction.misc_libary import loss
+from misc_libary import loss
 import sys
 import csv
 
@@ -36,8 +36,10 @@ class LinearRegression:
                 epochs = input("Please type the numbers of epoch you want to train: ")
                 print(" ")
                 epochs = int(epochs)
-                self.epochs = epochs
-                break
+                if epochs > 0:
+                    self.epochs = epochs
+                    break
+                print("Please don't input negative numbers :)")
             except ValueError:
                 print("Invalid Input!")
 
@@ -138,6 +140,12 @@ class LinearRegression:
                     break
                 else:
                     rm_input = round(float(rm_input), 20)
+
+                    if rm_input < 0:
+                        print(" ")
+                        print("Please don't enter negative numbers :)")
+                        raise ValueError
+
                     rm_input_norm = (rm_input - df_mean[0]) / df_range[0]  # normalizing input
 
                     self.pred_target = self.w1 * rm_input_norm + self.bias  # predicting
@@ -151,6 +159,7 @@ class LinearRegression:
                     print(" ")
             except ValueError:
                 print("Invalid Input!")
+                print(" ")
 
     # a getter for the viszulation function
     def getter_viszualtion(self) -> list:
