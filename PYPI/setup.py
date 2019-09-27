@@ -15,16 +15,16 @@ setuptools.setup(
 	url="https://github.com/LuposX/BostonHousingPrediction",
 	license="MIT",
 	keywords="regression meachine-learning housing_prices_boston learning_purpose",
-	
+
 	# Description
 	description="Predict housing prices in boston.",
     long_description=long_description,
     long_description_content_type="text/markdown",
-	
+
 	# What is in our module/scripts
 	# py_modules=["misc_libary", "polynomial_regression_libary", "linear_regression_libary"],
 	scripts=["boston_housing_prediction/__main__.py"],
-	packages=["boston_housing_prediction"], 
+	packages=["boston_housing_prediction"],
     entry_points = {
         'console_scripts': [
             'boston_housing_prediction = boston_housing_prediction.__main__'
