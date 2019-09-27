@@ -3,7 +3,7 @@ Author: Lupos
 Started: 08.09.2019
 Lang: Phyton
 Description: Prediction of boston housing market prices.
-version: 0.2.1
+version: 0.2.2
 
 Dataset:
 Housing Values in Suburbs of Boston
@@ -14,7 +14,8 @@ PTRATIO: pupil-teacher ratio by town
 MEDV: median value of owner-occupied homes in 10.000$
 
 Latest change:
-- added Normalization for data
+- fixed Normalization for data
+- organisational stuff and bugfixes: #24
 '''
 import argparse
 import multiprocessing as mp
