@@ -22,7 +22,6 @@ setuptools.setup(
     long_description_content_type="text/markdown",
 
 	# What is in our module/scripts
-	# py_modules=["misc_libary", "polynomial_regression_libary", "linear_regression_libary"],
 	scripts=["boston_housing_prediction/__main__.py"],
 	packages=["boston_housing_prediction"],
     entry_points = {
