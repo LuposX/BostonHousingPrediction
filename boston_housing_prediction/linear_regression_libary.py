@@ -151,12 +151,19 @@ class LinearRegression:
                     self.pred_target = self.w1 * rm_input_norm + self.bias  # predicting
 
                     # denormalization of output
-                    denorm_pred_target = (self.pred_target * df_range[1]) + df_mean[1]
+                    denorm_pred_target = round((self.pred_target * df_range[1]) + df_mean[1], 6)
 
-                    print(" ")
-                    print("The model predicted that a house with a RM value of: " + str(rm_input) + ".")
-                    print("Is worth about: " + str(round(denorm_pred_target, 6)) + " in 10,000$(GER 10.000$).")
-                    print(" ")
+                    # check if predicted output is negative
+                    if denorm_pred_target < 0:
+                        print("-----------------------------------------------------------------------------")
+                        print("Warning: the input values doesn't correspond to a real house.")
+                        print("-----------------------------------------------------------------------------")
+                        print(" ")
+                    else:
+                        print("-----------------------------------------------------------------------------")
+                        print("Is worth about: " + str(denorm_pred_target) + " in 10,000$(GER 10.000$).")
+                        print("-----------------------------------------------------------------------------")
+                        print(" ")
             except ValueError:
                 print("Invalid Input!")
                 print(" ")

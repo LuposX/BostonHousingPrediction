@@ -237,13 +237,7 @@ class PolynomialRegression:
                 print(self.pred_target)
 
                 # denormalization of output
-                denorm_pred_target = (self.pred_target * df_range[3]) + df_mean[3]
-
-                # print(self.pred_target)
-                # print("---------------")
-                # print(df_range)
-                # print("---------------")
-                # print(df_mean)
+                denorm_pred_target = round((self.pred_target * df_range[3]) + df_mean[3], 6)
 
                 print(" ")
                 print("The model predicted that a house with the values: ")
@@ -251,8 +245,18 @@ class PolynomialRegression:
                 print("LSTAT :" + str(lstat_input))
                 print("PTRATIO :" + str(ptratio_input))
                 print(" ")
-                print("Is worth about: " + str(round(denorm_pred_target, 6)) + " in 10,000$(GER 10.000$).")
-                print(" ")
+
+                # check if predicted output is negative
+                if denorm_pred_target < 0:
+                    print("-----------------------------------------------------------------------------")
+                    print("Warning: the input values doesn't correspond to a real house.")
+                    print("-----------------------------------------------------------------------------")
+                    print(" ")
+                else:
+                    print("-----------------------------------------------------------------------------")
+                    print("Is worth about: " + str(denorm_pred_target) + " in 10,000$(GER 10.000$).")
+                    print("-----------------------------------------------------------------------------")
+                    print(" ")
 
             except Exception as e:
                 print("Someting went wrong: ", str(e))
