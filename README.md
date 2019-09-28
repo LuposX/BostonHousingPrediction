@@ -35,9 +35,9 @@ $ python -m boston_housing_prediction -h
 
 ## Release History
 *   0.2.2
-    *   fix negative input for training of model
-    *   fix negative output of predictions
-    *   optimized folder structure for PYPI
+    *   fix negative input for training of model #24
+    *   fix negative output of predictions #24
+    *   optimized folder structure for PYPI #13
     *   optimized some code.(comments, input)
     
 *   0.2.1
