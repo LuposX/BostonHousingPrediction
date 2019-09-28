@@ -39,7 +39,7 @@ $ python -m boston_housing_prediction -h
     *   fix negative output of predictions #24
     *   optimized folder structure for PYPI #13
     *   optimized some code.(comments, input)
-    *   documentation: changes in PYPI, cooments in code 
+    *   documentation: changes in PYPI, coments in code 
     
 *   0.2.1
     *   add normalization for data
