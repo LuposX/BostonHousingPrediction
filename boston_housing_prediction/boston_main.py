@@ -1,35 +1,19 @@
-'''
-Author: Lupos
-Started: 08.09.2019
-Lang: Phyton
-Description: Prediction of boston housing market prices.
-version: 0.2.1
-
-Dataset:
-Housing Values in Suburbs of Boston
-
-RM: average number of rooms per dwelling(Wohnung)
-LSTAT: percentage of population considered lower status
-PTRATIO: pupil-teacher ratio by town
-MEDV: median value of owner-occupied homes in 10.000$
-
-Latest change:
-- added Normalization for data
-'''
 import argparse
 import multiprocessing as mp
 import random
 import sys
 
 # My Files that get imported
-from boston_housing_prediction.linear_regression_libary import LinearRegression
-from boston_housing_prediction.polynomial_regression_libary import PolynomialRegression
-from boston_housing_prediction.misc_libary import *
+# from boston_housing_prediction.linear_regression_libary import LinearRegression
+# from boston_housing_prediction.polynomial_regression_libary import PolynomialRegression
+# from boston_housing_prediction.misc_libary import *
+from linear_regression_libary import LinearRegression
+from polynomial_regression_libary import PolynomialRegression
+from misc_libary import *
 
 # TODO: fix train and test loss
 
 # GLOBAL VARIABLES
-# pool = multiprocessing.Pool(3) # set the pool(how many kernels) are used for multiprocessing
 visualize_process = None  # gets later used from multiprocessing
 
 
@@ -122,10 +106,11 @@ def main():
 
         random.seed(123)  # needed to fix some issued with multiprocessing
         list_process_arg = model.getter_viszualtion()
+
+        # visualizing is in a new process
         visualize_process = mp.Process(target=visualize,
                                        args=(args, df_data, list_process_arg))  # use "args" if arguments are needed
         visualize_process.start()
-        # model.visualize(args, df_data)  # visualize our model
         if args.predict_on:
             model.predic(visualize_process, args_normalization)  # make preictions with the model
 
@@ -162,12 +147,15 @@ def main():
 
         random.seed(123)  # needed to fix some issued with multiprocessing
         list_process_arg = model_poly.getter_viszualtion()
+
+        # visualizing is in a new process
         visualize_process = mp.Process(target=visualize,
                                        args=(args, df_data, list_process_arg))  # use "args" if arguments are needed
         visualize_process.start()
         if args.predict_on:
             model_poly.predic(visualize_process, args_normalization)  # make preictions with the model
 
+    # print what the feature shortcuts means
     elif args.h_features:
         print(" ")
         print("Features and their meaning")

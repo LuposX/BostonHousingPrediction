@@ -18,7 +18,6 @@ def sigmoid(x: float) -> float:
 
 def loss(pred_target: float, real_traget: float) -> float:
     return round(float(np.sqrt((pred_target - real_traget) ** 2)), 4)
-    #return float((pred_target - real_traget) ** 2)
 
 
 def get_Data() -> object:
@@ -118,19 +117,17 @@ def preproc_data(df: object, args) -> list:
     df[["MEDV"]] = df[["MEDV"]] / 10000
 
     if args.model == "linear_regression":
-        # split data and target
-        df_new = df #df[["RM"]]
+        df_new = df
 
         # normalization variables for linear regression
         df_new_range = df_new.max() - df_new.min()
         df_new_mean = df_new.std(ddof=1)
 
+        # normalization
         df_new = (df_new - df_new_mean) / df_new_range
 
         # shuffling data
         df_new = df_new.sample(frac=1).reset_index(drop=True)
-
-        #df_new["MEDV"] = df["MEDV"]  # we dont want to normalize our target so here we add data and target together in one dataset again.
 
         # split in training and test data
         df_new_train = df_new[:380]
@@ -139,19 +136,17 @@ def preproc_data(df: object, args) -> list:
         return df_new_train, df_new_test, df_new_range, df_new_mean
 
     elif args.model == "polynomial_regression":
-        # split data and target
-        df_new = df # df[["RM", "LSTAT", "PTRATIO"]]
+        df_new = df
 
         # normalization variables for polynomial regression
         df_new_range = df_new.max() - df_new.min()
         df_new_mean = df_new.mean()
 
+        # normalization
         df_new = (df_new - df_new_mean) / df_new_range
 
         # shuffling data
         df_new = df_new.sample(frac=1).reset_index(drop=True)
-
-        # df_new["MEDV"] = df["MEDV"]  # we dont want to normalize our target so here we add data and target together in one dataset again.
 
         # split in training and test data
         df_new_train = df_new[:380]
@@ -164,13 +159,11 @@ def preproc_data(df: object, args) -> list:
 
 
 def hypothesis_pol(weights, f1, f2, f3, bias):
-    #print(weights[0])
     pred = round(weights[0] * f1 + weights[1] * f1 ** 2 + weights[2] * f2 + weights[3] * f2 ** 2 + \
                  weights[4] * f3 + weights[5] * f3 ** 2 + weights[6] * bias, 4)
     return pred
 
 # visualize our model. the function visualize() is not in the class model so that we can use multiprocessing.
-# args, df_data, self.w1, self.bias, self.train_loss_history, self.test_loss_history, self.evaluation_time, self.data_train, self.target_train
 def visualize(args, df_data, parameter_list: list) -> None:
     # unzip the argument list gotten from model.getter_viszulation()
     weights_bias = parameter_list[0]
@@ -206,6 +199,7 @@ def visualize(args, df_data, parameter_list: list) -> None:
 
         print(" ")
 
+    # visualize data if argument says so
     if args.v_data:
         visualize_Data(df_data)
 
@@ -228,43 +222,11 @@ def visualize(args, df_data, parameter_list: list) -> None:
             sns.lineplot(x=X, y=Y)
             sns.scatterplot(x=data_train, y=target_train, color="green")
         elif args.model == "polynomial_regression":
-            # x_poly = []
-            # y_poly = []
-            # for i in range(2, 15, 1):
-            #     x_poly.append(i)
-            #     y_poly.append(hypothesis_pol(weights_bias[:], i, i, i, 1))
-            #     # weights, f1, f2, f3, bias
-            # #plt.plot(x_poly, y_poly)
-            #
-            # fig, axes = plt.subplots(nrows=2, ncols=2, figsize=(9, 6))
-            # axes = axes.flatten()  # axes[1] because axes is a tulpl and figure is in it
-            #
-            # fig.suptitle("Decision Border and Data-points")
-            #
-            # sns.set_style("darkgrid")
-            # axes[0].set(xlabel='RM', ylabel='MDV')
-            # sns.lineplot(x=x_poly, y=y_poly, ax=axes[0])
-            # sns.scatterplot(x=data_train["RM"], y=target_train, ax=axes[0], color="green")
-            #
-            # axes[1].set(xlabel='LSTAT', ylabel='MDV')
-            # sns.lineplot(x=x_poly, y=y_poly, ax=axes[1])
-            # sns.scatterplot(x=data_train["LSTAT"], y=target_train, ax=axes[1], color="green")
-            #
-            # axes[2].set(xlabel='PTRATIO', ylabel='MDV')
-            # sns.lineplot(x=x_poly, y=y_poly, ax=axes[2])
-            # sns.scatterplot(x=data_train["PTRATIO"], y=target_train, ax=axes[2], color="green")
-            #
-            # axes[3].remove()
-
-            # plot model for polynomial_model
             v_model_poly("RM", "LSTAT", weights_bias, data_train, target_train)
             v_model_poly("RM", "PTRATIO", weights_bias, data_train, target_train)
 
 
     # convert our loss arrays into a dataframe from pandas
-    # print("x_train: ", str(len(x_train_loose)))
-    # print("train_loss: ", str(len(train_loss_history)))
-    # print("test_loss_history: ", str(len(test_loss_history)))
     data = {"x": x_train_loose, "train": train_loss_history, "test": test_loss_history}
     data = pd.DataFrame(data, columns=["x", "train", "test"])
 
@@ -278,14 +240,17 @@ def visualize(args, df_data, parameter_list: list) -> None:
         plt.ylabel("Loss")
         plt.title("Loss over Time")
 
+    # plt.show() when we have a diagram
     if args.v_loss or args.v_model or args.v_data:
         plt.show()
 
 
 def v_model_poly(x_axis, y_axis, weights_bias, data_train, target_train):
+    # create our figure. With size of the figure and specifying the art of diagrams we use "3d"
     fig = plt.figure(figsize=(10, 7))
     ax = fig.gca(projection='3d')
 
+    # data gets created for visualizing our model
     f1 = np.arange(-0.7, 1.2, 0.1)
     f2 = np.arange(-0.7, 1.2, 0.1)
     f3 = np.arange(-0.7, 1.2, 0.1)
@@ -296,8 +261,10 @@ def v_model_poly(x_axis, y_axis, weights_bias, data_train, target_train):
         weights_bias[4] * f3 + \
         weights_bias[5] * f3 ** 2 + weights_bias[6] * 1
 
+    # ploting our model
     ax.plot_surface(f1, f2, Z, alpha=0.3, edgecolors='grey')
 
+    # ploting our data points from our dataframe
     X = data_train[x_axis]
     Y = data_train[y_axis]
     Z = target_train
@@ -315,9 +282,9 @@ def v_model_poly(x_axis, y_axis, weights_bias, data_train, target_train):
     ax.set_zlabel("MEDV")
 
     # hide the ticks of the label
-    #ax.axes.xaxis.set_ticklabels([])
-    #ax.axes.yaxis.set_ticklabels([])
-    #ax.axes.zaxis.set_ticklabels([])
+    ax.axes.xaxis.set_ticklabels([])
+    ax.axes.yaxis.set_ticklabels([])
+    ax.axes.zaxis.set_ticklabels([])
 
     # hide the grid
     ax.grid(False)

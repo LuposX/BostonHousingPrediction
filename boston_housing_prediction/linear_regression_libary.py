@@ -1,5 +1,5 @@
 import time
-from boston_housing_prediction.misc_libary import loss
+from misc_libary import loss
 import sys
 import csv
 
@@ -19,7 +19,6 @@ class LinearRegression:
         # split in target and data
         self.data_train = df[0]["RM"].tolist()
         self.target_train = df[0]["MEDV"].tolist()
-
         self.data_test = df[1]["RM"].tolist()
         self.target_test = df[1]["MEDV"].tolist()
 
@@ -36,8 +35,10 @@ class LinearRegression:
                 epochs = input("Please type the numbers of epoch you want to train: ")
                 print(" ")
                 epochs = int(epochs)
-                self.epochs = epochs
-                break
+                if epochs > 0:
+                    self.epochs = epochs
+                    break
+                print("Please don't input negative numbers :)")
             except ValueError:
                 print("Invalid Input!")
 
@@ -52,9 +53,24 @@ class LinearRegression:
                 # our hypothesis/ what our model predicts
                 pred_target = self.w1 * f1 + self.bias
 
-                # update our weights
+                # update our weights/bias
                 self.bias = self.bias - (self.alpha * (pred_target - self.target_train[i]))
                 self.w1 = self.w1 - (self.alpha * (pred_target - self.target_train[i]) * f1)
+
+                # outputs for debug mode
+                if self.args.fd == "debug":
+                    print(" ")
+                    print("example: ", str(i))
+                    print("----------------------")
+                    print("Weight 1: ", str(self.w1))
+                    print("Weight 1 change: ", str(self.alpha * (pred_target - self.target_train[i]) * f1))
+                    print("Weight 1 feature: ", str(f1))
+                    print("Error: ", str(pred_target - self.target_train[i]))
+                    print("----------------------")
+                    print("Bias: ", str(self.bias))
+                    print("Bias change: ", str(self.alpha * (pred_target - self.target_train[i])))
+                    print("Error: ", str(pred_target - self.target_train[i]))
+                    print(" ")
 
                 # sums train loss
                 train_loss = loss(pred_target, self.target_train[i])
@@ -108,7 +124,6 @@ class LinearRegression:
         df_range = args_normalization[0]
         df_mean = args_normalization[1]
 
-
         time.sleep(1)  # sleeps so that the function visualize()(which is seperate process through multiprocessing) has enough time to print the output correctly
         self.pred_target = 0
         print(" ")
@@ -138,19 +153,34 @@ class LinearRegression:
                     break
                 else:
                     rm_input = round(float(rm_input), 20)
+
+                    # checks that no negative numbers get entered
+                    if rm_input < 0:
+                        print(" ")
+                        print("Please don't enter negative numbers :)")
+                        raise ValueError
+
                     rm_input_norm = (rm_input - df_mean[0]) / df_range[0]  # normalizing input
 
                     self.pred_target = self.w1 * rm_input_norm + self.bias  # predicting
 
                     # denormalization of output
-                    denorm_pred_target = (self.pred_target * df_range[1]) + df_mean[1]
+                    denorm_pred_target = round((self.pred_target * df_range[1]) + df_mean[1], 6)
 
-                    print(" ")
-                    print("The model predicted that a house with a RM value of: " + str(rm_input) + ".")
-                    print("Is worth about: " + str(round(denorm_pred_target, 6)) + " in 10,000$(GER 10.000$).")
-                    print(" ")
+                    # check if predicted output is negative
+                    if denorm_pred_target < 0:
+                        print("-----------------------------------------------------------------------------")
+                        print("Warning: the input values doesn't correspond to a real house.")
+                        print("-----------------------------------------------------------------------------")
+                        print(" ")
+                    else:
+                        print("-----------------------------------------------------------------------------")
+                        print("Is worth about: " + str(denorm_pred_target) + " in 10,000$(GER 10.000$).")
+                        print("-----------------------------------------------------------------------------")
+                        print(" ")
             except ValueError:
                 print("Invalid Input!")
+                print(" ")
 
     # a getter for the viszulation function
     def getter_viszualtion(self) -> list:
