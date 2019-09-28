@@ -19,7 +19,6 @@ class LinearRegression:
         # split in target and data
         self.data_train = df[0]["RM"].tolist()
         self.target_train = df[0]["MEDV"].tolist()
-
         self.data_test = df[1]["RM"].tolist()
         self.target_test = df[1]["MEDV"].tolist()
 
@@ -54,9 +53,24 @@ class LinearRegression:
                 # our hypothesis/ what our model predicts
                 pred_target = self.w1 * f1 + self.bias
 
-                # update our weights
+                # update our weights/bias
                 self.bias = self.bias - (self.alpha * (pred_target - self.target_train[i]))
                 self.w1 = self.w1 - (self.alpha * (pred_target - self.target_train[i]) * f1)
+
+                # outputs for debug mode
+                if self.args.fd == "debug":
+                    print(" ")
+                    print("example: ", str(i))
+                    print("----------------------")
+                    print("Weight 1: ", str(self.w1))
+                    print("Weight 1 change: ", str(self.alpha * (pred_target - self.target_train[i]) * f1))
+                    print("Weight 1 feature: ", str(f1))
+                    print("Error: ", str(pred_target - self.target_train[i]))
+                    print("----------------------")
+                    print("Bias: ", str(self.bias))
+                    print("Bias change: ", str(self.alpha * (pred_target - self.target_train[i])))
+                    print("Error: ", str(pred_target - self.target_train[i]))
+                    print(" ")
 
                 # sums train loss
                 train_loss = loss(pred_target, self.target_train[i])
@@ -110,7 +124,6 @@ class LinearRegression:
         df_range = args_normalization[0]
         df_mean = args_normalization[1]
 
-
         time.sleep(1)  # sleeps so that the function visualize()(which is seperate process through multiprocessing) has enough time to print the output correctly
         self.pred_target = 0
         print(" ")
@@ -141,6 +154,7 @@ class LinearRegression:
                 else:
                     rm_input = round(float(rm_input), 20)
 
+                    # checks that no negative numbers get entered
                     if rm_input < 0:
                         print(" ")
                         print("Please don't enter negative numbers :)")

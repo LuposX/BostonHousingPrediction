@@ -8,39 +8,33 @@ class PolynomialRegression:
         self.weights = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
         self.bias = 1
 
-        # how man epoch we train
-        self.epochs = 30
-        self.alpha = 0.003
+        self.epochs = 30   # how man epoch we train
+        self.alpha = 0.003  # learning rate
+
+        # initiate variables to visualize loss history
         self.train_loss_history = []
         self.test_loss_history = []
         self.x_train_loose = []
 
         # split in target and data
-        # print(df[0].info())
-        # print("-----------------------")
         self.data_train = df[0].iloc[:,  df[0].columns != "MEDV"].reset_index(drop=True)    # the ":" stands for every element in there
         self.data_test = df[1].iloc[:,  df[1].columns != "MEDV"].reset_index(drop=True)
-        # print(self.data_train.info())
         self.target_train = df[0]["MEDV"].tolist()
         self.target_test = df[1]["MEDV"].tolist()
+
         # misc
         self.evaluation_time = 0
         self.args = args
 
-        self.w1 = 0    # self w1 is a dummy value. can be removed later
-
     # our hypothesis/ what our model predicts
     def hypothesis(self, weights, f1, f2, f3, bias):
-        #print(weights[0])
-        # pred = round(weights[0] * f1 + weights[1] * f1 ** 2 + weights[2] * f2 + weights[3] * f2 ** 2 + \
-        #              weights[4] * f3 + weights[5] * f3 ** 2 + weights[6] * bias, 10)
         pred = weights[0] * f1 + weights[1] * f1 ** 2 + weights[2] * f1 ** 3 + weights[3] * f2 + weights[4] * f2 ** 2 + \
                           weights[5] * f2 ** 3 + weights[6] * f3 + weights[7] * f3 ** 2 + weights[8] * f3 ** 3 + weights[9] * bias
         return pred
 
     # training our model
     def train(self) -> None:
-
+        # exits while loop when right inputs got inserted
         while True:
             try:
                 # get input for our model
@@ -54,7 +48,7 @@ class PolynomialRegression:
             except ValueError:
                 print("Invalid Input!")
 
-        start_time = time.time()
+        start_time = time.time()   # start timer. To later calculate time needed to train the model
         for _ in range(self.epochs):
             train_loss_sum = 0
             test_loss_sum = 0
@@ -68,8 +62,10 @@ class PolynomialRegression:
                 # our hypothesis/ what our model predicts
                 pred_target = self.hypothesis(self.weights, f1, f2, f3, self.bias)
 
+                # calculate the error(How far away was our prediction from the real value)
                 error = (pred_target - self.target_train[i])
 
+                # training our weights
                 self.weights[0] = self.weights[0] - self.alpha * (error * f1)
                 self.weights[1] = self.weights[1] - self.alpha * (2 * error * f1)
                 self.weights[2] = self.weights[2] - self.alpha * (3 * error * f2 ** 2)
@@ -80,11 +76,12 @@ class PolynomialRegression:
                 self.weights[7] = self.weights[7] - self.alpha * (2 * error * f3)
                 self.weights[8] = self.weights[8] - self.alpha * (3 * error * f3 ** 2)
                 self.weights[9] = self.weights[9] - self.alpha * (error * self.bias)
-                #print((pred_target - self.target_train[i]) * self.bias)
+
                 # sums train loss
                 train_loss = loss(pred_target, self.target_train[i])
                 train_loss_sum += train_loss
 
+                # outputs for debug mode
                 if self.args.fd == "debug":
                     print(" ")
                     print("example: ", str(i))
@@ -110,7 +107,7 @@ class PolynomialRegression:
                     # predict test house prices
                     pred_target_test = self.hypothesis(self.weights, f1, f2, f3, self.bias)
 
-                    # evalutae with loss
+                    # evaluate with loss
                     test_loss = loss(pred_target_test, self.target_test[i])
                     test_loss_sum += test_loss
 
@@ -144,7 +141,7 @@ class PolynomialRegression:
 
 
     # a getter for the viszulation function
-    def getter_viszualtion(self) -> list:
+    def getter_viszualtion(self):
         return self.weights, self.train_loss_history, self.test_loss_history, self.evaluation_time, self.data_train, self.target_train, self.x_train_loose
 
     # saves weight and bias
@@ -177,6 +174,7 @@ class PolynomialRegression:
                 print("1.RM 2.LSTAT 3.PTRATIO")
                 input_list = []
                 for i in range(0,3,1):
+                    # exits while loop when right inputs got inserted
                     while True:
                         input_var = input()
 
@@ -210,6 +208,8 @@ class PolynomialRegression:
 
             try:
                 print(" ")
+
+                # typecasting our inputs and rounding them
                 rm_input = round(float(input_list[0]), 4)
                 lstat_input = round(float(input_list[1]), 4)
                 ptratio_input = round(float(input_list[2]), 4)
@@ -219,8 +219,8 @@ class PolynomialRegression:
                 lstat_input_norm = (lstat_input - df_mean[1]) / df_range[1]
                 ptratio_input_norm = (ptratio_input - df_mean[2]) / df_range[2]
 
+                # predicting
                 self.pred_target = self.hypothesis(self.weights, rm_input_norm, lstat_input_norm, ptratio_input_norm, 1)
-                print(self.pred_target)
 
                 # denormalization of output
                 denorm_pred_target = round((self.pred_target * df_range[3]) + df_mean[3], 6)
@@ -245,4 +245,4 @@ class PolynomialRegression:
                     print(" ")
 
             except Exception as e:
-                print("Someting went wrong: ", str(e))
+                print("Something went wrong: ", str(e))
