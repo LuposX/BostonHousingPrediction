@@ -10,7 +10,7 @@ class PolynomialRegression:
 
         # how man epoch we train
         self.epochs = 30
-        self.alpha = 0.005
+        self.alpha = 0.003
         self.train_loss_history = []
         self.test_loss_history = []
         self.x_train_loose = []
@@ -68,20 +68,6 @@ class PolynomialRegression:
                 # our hypothesis/ what our model predicts
                 pred_target = self.hypothesis(self.weights, f1, f2, f3, self.bias)
 
-                # update our weights
-                #print((pred_target - self.target_train[i]))
-
-                # try:
-                #     error = (pred_target - self.target_train[i])
-                #     if error > 1000000000000:
-                #         error = 1000000000000
-                #     elif error < -1000000000000:
-                #         error = -1000000000000
-                # except RuntimeWarning or RuntimeError():
-                #     if error > 1000000000000:
-                #         error = 1000000000000
-                #     elif error < -1000000000000:
-                #         error = -1000000000000
                 error = (pred_target - self.target_train[i])
 
                 self.weights[0] = self.weights[0] - self.alpha * (error * f1)
@@ -147,11 +133,11 @@ class PolynomialRegression:
                 if self.args.fd == "full":
                     print(" ")
                     print("Epoch" + str(_) + " Mean-train loss: " + str(
-                        round(mean_loss_one_epoch_test, 6)))  # prints mean-loss of every Epoch
+                        round(mean_loss_one_epoch_train, 6)))  # prints mean-loss of every Epoch
                     print(" ")
                 else:
                     print("Epoch" + str(_) + " Mean-train loss: " +
-                          str(mean_loss_one_epoch_test))  # prints mean-loss of every Epoch
+                          str(mean_loss_one_epoch_train))  # prints mean-loss of every Epoch
 
             end_time = time.time()
             self.evaluation_time = end_time - start_time
