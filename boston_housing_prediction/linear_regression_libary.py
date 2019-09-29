@@ -35,7 +35,7 @@ class LinearRegression:
                 # getting the learning rate
                 alpha = input("Please type the value of learning rate you want to use: ") or self.alpha
 
-                # if standart epochs value print the value
+                # if default epochs value print the value
                 if alpha == self.alpha:
                     print(str(self.alpha))
 
@@ -55,7 +55,7 @@ class LinearRegression:
                 # get epochs for our model
                 epochs = input("Please type the numbers of epoch you want to train: ") or self.epochs
 
-                # if standart epochs value print the value
+                # if default epochs value print the value
                 if epochs == self.epochs:
                     print(str(self.epochs))
 
@@ -180,7 +180,7 @@ class LinearRegression:
                     break
                 else:
 
-                    rm_input = round(float(rm_input or 5), 20)   # or 5 is the standart value
+                    rm_input = round(float(rm_input or 5), 20)   # or 5 is the default value
 
                     # checks that no negative numbers get entered
                     if rm_input < 0:

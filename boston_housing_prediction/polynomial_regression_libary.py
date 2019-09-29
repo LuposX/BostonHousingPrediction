@@ -40,7 +40,7 @@ class PolynomialRegression:
                 # getting the learning rate
                 alpha = input("Please type the value of learning rate you want to use: ") or self.alpha
 
-                # if standart epochs value print the value
+                # if default epochs value print the value
                 if alpha == self.alpha:
                     print(str(self.alpha))
 
@@ -60,7 +60,7 @@ class PolynomialRegression:
                 # get input for our model
                 epochs = input("Please type the numbers of epoch you want to train: ") or self.epochs
 
-                # if standart epochs value print the value
+                # if default epochs value print the value
                 if epochs == self.epochs:
                     print(str(self.epochs))
 
@@ -199,11 +199,11 @@ class PolynomialRegression:
                 print("Type the Values in the following order: ")
                 print("1.RM 2.LSTAT 3.PTRATIO")
                 input_list = []
-                standart_values = [6.24,  12.94, 18.52]  # those are the standart values when field is left empty. Standart values corrospond to mean values of feature
+                default_values = [6.24,  12.94, 18.52]  # those are the default values when field is left empty. default values corrospond to mean values of feature
                 for i in range(0,3,1):
                     # exits while loop when right inputs got inserted
                     while True:
-                        input_var = input() or standart_values[i]
+                        input_var = input() or default_values[i]
 
                         if input_var == "quit" or input_var == "Quit":
                             if visualize_process.is_alive():
@@ -237,7 +237,7 @@ class PolynomialRegression:
                 print(" ")
 
                 # typecasting our inputs and rounding them
-                rm_input = round(float(input_list[0]), 4)  # or 5 is the standart value
+                rm_input = round(float(input_list[0]), 4)  # or 5 is the default value
                 lstat_input = round(float(input_list[1]), 4)
                 ptratio_input = round(float(input_list[2]), 4)
 
