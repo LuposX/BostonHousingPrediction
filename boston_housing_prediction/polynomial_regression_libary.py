@@ -173,10 +173,11 @@ class PolynomialRegression:
                 print("Type the Values in the following order: ")
                 print("1.RM 2.LSTAT 3.PTRATIO")
                 input_list = []
+                standart_values = [6.24,  12.94, 18.52]  # those are the standart values when field is left empty. Standart values corrospond to mean values of feature
                 for i in range(0,3,1):
                     # exits while loop when right inputs got inserted
                     while True:
-                        input_var = input()
+                        input_var = input() or standart_values[i]
 
                         if input_var == "quit" or input_var == "Quit":
                             if visualize_process.is_alive():
@@ -210,7 +211,7 @@ class PolynomialRegression:
                 print(" ")
 
                 # typecasting our inputs and rounding them
-                rm_input = round(float(input_list[0]), 4)
+                rm_input = round(float(input_list[0]), 4)  # or 5 is the standart value
                 lstat_input = round(float(input_list[1]), 4)
                 ptratio_input = round(float(input_list[2]), 4)
 
@@ -225,21 +226,24 @@ class PolynomialRegression:
                 # denormalization of output
                 denorm_pred_target = round((self.pred_target * df_range[3]) + df_mean[3], 6)
 
-                print(" ")
-                print("The model predicted that a house with the values: ")
-                print("RM :" + str(rm_input))
-                print("LSTAT :" + str(lstat_input))
-                print("PTRATIO :" + str(ptratio_input))
-                print(" ")
-
                 # check if predicted output is negative
                 if denorm_pred_target < 0:
+                    print(" ")
                     print("-----------------------------------------------------------------------------")
+                    print("The model predicted that a house with the values: ")
+                    print("RM :" + str(rm_input))
+                    print("LSTAT :" + str(lstat_input))
+                    print("PTRATIO :" + str(ptratio_input))
                     print("Warning: the input values doesn't correspond to a real house.")
                     print("-----------------------------------------------------------------------------")
                     print(" ")
                 else:
+                    print(" ")
                     print("-----------------------------------------------------------------------------")
+                    print("The model predicted that a house with the values: ")
+                    print("RM :" + str(rm_input))
+                    print("LSTAT :" + str(lstat_input))
+                    print("PTRATIO :" + str(ptratio_input))
                     print("Is worth about: " + str(denorm_pred_target) + " in 10,000$(GER 10.000$).")
                     print("-----------------------------------------------------------------------------")
                     print(" ")

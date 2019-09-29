@@ -31,33 +31,36 @@ def main():
     # implemented
     parser.add_argument("--v_data", metavar="VISUALIZE_DATA",
                         help="Set it to True if you want to get a visualization of the data.(default: %(default)s)",
-                        type=bool, default=False)
+                        type=str, default="False")
     # implemented
     parser.add_argument("--v_loss", metavar="VISUALIZE_LOSS",
                         help="Set it to True if you want to get a visualization of the loss.(default: %(default)s)",
-                        type=bool, default=False)
+                        type=str, default="False")
     # implemented
     parser.add_argument("--v_model", metavar="VISUALIZE_MODEL",
                         help="Set it to True if you want to get a visualization of the model.(default: %(default)s)",
-                        type=bool, default=False)
+                        type=str, default="False")
     parser.add_argument("--fd", metavar="FEEDBACK",
                         help="Set how much feedback you want.(Choices: %(choices)s)",
                         type=str, choices=["full", "intermediate", "weak", "debug"], default="immediate")
     # implemented
     parser.add_argument("--save", metavar="SAVE_MODEL",
                         help="Set it to True if you want to save the model after training.(default: %(default)s)",
-                        type=bool, default=False)
+                        type=str, default="False")
 
     parser.add_argument("--h_features", metavar="HELP_FEATURES",
                         help="Set it to True if you want to print out the meaning of the features in the dataset.(default: %(default)s)",
-                        type=bool, default=False)
+                        type=str, default="False")
 
     parser.add_argument("--predict_on",
                         help="Set it to False if you dont want to predict after training.(default: %(default)s)",
-                        action='store_false')
+                        type=str, default="True")
 
     # parse the arguments
     args = parser.parse_args()
+
+    # convert our arguments from strings into booleans
+    parse_bool_args(args)
 
     # check if the dataset exist
     if not is_non_zero_file():

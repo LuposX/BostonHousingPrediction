@@ -288,3 +288,36 @@ def v_model_poly(x_axis, y_axis, weights_bias, data_train, target_train):
 
     # hide the grid
     ax.grid(False)
+
+
+# convert our arguments from strings into booleans
+def parse_bool_args(args):
+    if args.predict_on == "False" or args.predict_on == "false" or args.predict_on == "false ":
+        args.predict_on = False
+    if args.predict_on == "True" or args.predict_on == "true" or args.predict_on == "true ":
+        args.predict_on = True
+
+    if args.h_features == "False" or args.h_features == "false" or args.h_features == "false ":
+        args.h_features = False
+    if args.h_features == "True" or args.h_features == "true" or args.h_features == "true ":
+        args.h_features = True
+
+    if args.save == "False" or args.save == "false" or args.save == "false ":
+        args.save = False
+    if args.save == "True" or args.save == "true" or args.save == "true ":
+        args.save = True
+
+    if args.v_model == "False" or args.v_model == "false" or args.v_model == "false ":
+        args.v_model = False
+    if args.v_model == "True" or args.v_model == "true" or args.v_model == "true ":
+        args.v_model = True
+
+    if args.v_loss == "False" or args.v_loss == "false" or args.v_loss == "false ":
+        args.v_loss = False
+    if args.v_loss == "True" or args.v_loss == "true" or args.v_loss == "true ":
+        args.v_loss = True
+
+    if args.v_data == "False" or args.v_data == "false" or args.v_data == "false ":
+        args.v_data = False
+    if args.v_data == "True" or args.v_data == "true" or args.v_data == "true ":
+        args.v_data = True

@@ -152,7 +152,8 @@ class LinearRegression:
                     sys.exit(0)  # exit the script sucessful
                     break
                 else:
-                    rm_input = round(float(rm_input), 20)
+
+                    rm_input = round(float(rm_input or 5), 20)   # or 5 is the standart value
 
                     # checks that no negative numbers get entered
                     if rm_input < 0:
@@ -170,11 +171,13 @@ class LinearRegression:
                     # check if predicted output is negative
                     if denorm_pred_target < 0:
                         print("-----------------------------------------------------------------------------")
+                        print("Your input of RM:", str(rm_input))
                         print("Warning: the input values doesn't correspond to a real house.")
                         print("-----------------------------------------------------------------------------")
                         print(" ")
                     else:
                         print("-----------------------------------------------------------------------------")
+                        print("Your input of RM:", str(rm_input))
                         print("Is worth about: " + str(denorm_pred_target) + " in 10,000$(GER 10.000$).")
                         print("-----------------------------------------------------------------------------")
                         print(" ")
