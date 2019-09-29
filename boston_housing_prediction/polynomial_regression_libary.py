@@ -34,18 +34,44 @@ class PolynomialRegression:
 
     # training our model
     def train(self) -> None:
+        # getting the learning rate for the model
+        while True:
+            try:
+                # getting the learning rate
+                alpha = input("Please type the value of learning rate you want to use: ") or self.alpha
+
+                # if default epochs value print the value
+                if alpha == self.alpha:
+                    print(str(self.alpha))
+
+                alpha = float(alpha)
+                if 0 < alpha < 1:
+                    self.alpha = alpha
+                    break
+                print(" ")
+                print("Please input a number between 0 and 1 :)")
+            except ValueError:
+                print(" ")
+                print("Invalid Input!")
+
         # exits while loop when right inputs got inserted
         while True:
             try:
                 # get input for our model
-                epochs = input("Please type the numbers of epoch you want to train: ")
-                print(" ")
+                epochs = input("Please type the numbers of epoch you want to train: ") or self.epochs
+
+                # if default epochs value print the value
+                if epochs == self.epochs:
+                    print(str(self.epochs))
+
                 epochs = int(epochs)
                 if epochs > 0:
                     self.epochs = epochs
                     break
+                print(" ")
                 print("Please don't input negative numbers :)")
             except ValueError:
+                print(" ")
                 print("Invalid Input!")
 
         start_time = time.time()   # start timer. To later calculate time needed to train the model
@@ -173,10 +199,11 @@ class PolynomialRegression:
                 print("Type the Values in the following order: ")
                 print("1.RM 2.LSTAT 3.PTRATIO")
                 input_list = []
+                default_values = [6.24,  12.94, 18.52]  # those are the default values when field is left empty. default values corrospond to mean values of feature
                 for i in range(0,3,1):
                     # exits while loop when right inputs got inserted
                     while True:
-                        input_var = input()
+                        input_var = input() or default_values[i]
 
                         if input_var == "quit" or input_var == "Quit":
                             if visualize_process.is_alive():
@@ -210,7 +237,7 @@ class PolynomialRegression:
                 print(" ")
 
                 # typecasting our inputs and rounding them
-                rm_input = round(float(input_list[0]), 4)
+                rm_input = round(float(input_list[0]), 4)  # or 5 is the default value
                 lstat_input = round(float(input_list[1]), 4)
                 ptratio_input = round(float(input_list[2]), 4)
 
@@ -225,21 +252,24 @@ class PolynomialRegression:
                 # denormalization of output
                 denorm_pred_target = round((self.pred_target * df_range[3]) + df_mean[3], 6)
 
-                print(" ")
-                print("The model predicted that a house with the values: ")
-                print("RM :" + str(rm_input))
-                print("LSTAT :" + str(lstat_input))
-                print("PTRATIO :" + str(ptratio_input))
-                print(" ")
-
                 # check if predicted output is negative
                 if denorm_pred_target < 0:
+                    print(" ")
                     print("-----------------------------------------------------------------------------")
+                    print("The model predicted that a house with the values: ")
+                    print("RM :" + str(rm_input))
+                    print("LSTAT :" + str(lstat_input))
+                    print("PTRATIO :" + str(ptratio_input))
                     print("Warning: the input values doesn't correspond to a real house.")
                     print("-----------------------------------------------------------------------------")
                     print(" ")
                 else:
+                    print(" ")
                     print("-----------------------------------------------------------------------------")
+                    print("The model predicted that a house with the values: ")
+                    print("RM :" + str(rm_input))
+                    print("LSTAT :" + str(lstat_input))
+                    print("PTRATIO :" + str(ptratio_input))
                     print("Is worth about: " + str(denorm_pred_target) + " in 10,000$(GER 10.000$).")
                     print("-----------------------------------------------------------------------------")
                     print(" ")

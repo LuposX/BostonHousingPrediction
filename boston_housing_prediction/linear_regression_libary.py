@@ -10,8 +10,8 @@ class LinearRegression:
         self.bias = 1
 
         # how man epoch we train
-        self.epochs = 30
-        self.alpha = 0.3
+        self.epochs = 40
+        self.alpha = 0.03
         self.train_loss_history = []
         self.test_loss_history = []
         self.x_train_loose = []
@@ -29,17 +29,44 @@ class LinearRegression:
     # training our model
     def train(self) -> None:
 
+        # getting the learning rate for the model
         while True:
             try:
-                # get input for our model
-                epochs = input("Please type the numbers of epoch you want to train: ")
+                # getting the learning rate
+                alpha = input("Please type the value of learning rate you want to use: ") or self.alpha
+
+                # if default epochs value print the value
+                if alpha == self.alpha:
+                    print(str(self.alpha))
+
+                alpha = float(alpha)
+                if 0 < alpha < 1:
+                    self.alpha = alpha
+                    break
                 print(" ")
+                print("Please input a number between 0 and 1 :)")
+            except ValueError:
+                print(" ")
+                print("Invalid Input!")
+
+        # get epochs for our model
+        while True:
+            try:
+                # get epochs for our model
+                epochs = input("Please type the numbers of epoch you want to train: ") or self.epochs
+
+                # if default epochs value print the value
+                if epochs == self.epochs:
+                    print(str(self.epochs))
+
                 epochs = int(epochs)
                 if epochs > 0:
                     self.epochs = epochs
                     break
+                print(" ")
                 print("Please don't input negative numbers :)")
             except ValueError:
+                print(" ")
                 print("Invalid Input!")
 
         start_time = time.time()
@@ -152,7 +179,8 @@ class LinearRegression:
                     sys.exit(0)  # exit the script sucessful
                     break
                 else:
-                    rm_input = round(float(rm_input), 20)
+
+                    rm_input = round(float(rm_input or 5), 20)   # or 5 is the default value
 
                     # checks that no negative numbers get entered
                     if rm_input < 0:
@@ -170,11 +198,13 @@ class LinearRegression:
                     # check if predicted output is negative
                     if denorm_pred_target < 0:
                         print("-----------------------------------------------------------------------------")
+                        print("Your input of RM:", str(rm_input))
                         print("Warning: the input values doesn't correspond to a real house.")
                         print("-----------------------------------------------------------------------------")
                         print(" ")
                     else:
                         print("-----------------------------------------------------------------------------")
+                        print("Your input of RM:", str(rm_input))
                         print("Is worth about: " + str(denorm_pred_target) + " in 10,000$(GER 10.000$).")
                         print("-----------------------------------------------------------------------------")
                         print(" ")
