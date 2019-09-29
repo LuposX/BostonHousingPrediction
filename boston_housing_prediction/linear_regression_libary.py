@@ -10,8 +10,8 @@ class LinearRegression:
         self.bias = 1
 
         # how man epoch we train
-        self.epochs = 30
-        self.alpha = 0.3
+        self.epochs = 40
+        self.alpha = 0.03
         self.train_loss_history = []
         self.test_loss_history = []
         self.x_train_loose = []
@@ -32,14 +32,20 @@ class LinearRegression:
         while True:
             try:
                 # get input for our model
-                epochs = input("Please type the numbers of epoch you want to train: ")
-                print(" ")
+                epochs = input("Please type the numbers of epoch you want to train: ") or self.epochs
+
+                # if standart epochs value print the value
+                if epochs == self.epochs:
+                    print(str(self.epochs))
+
                 epochs = int(epochs)
                 if epochs > 0:
                     self.epochs = epochs
                     break
+                print(" ")
                 print("Please don't input negative numbers :)")
             except ValueError:
+                print(" ")
                 print("Invalid Input!")
 
         start_time = time.time()
