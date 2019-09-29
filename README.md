@@ -34,6 +34,12 @@ $ python -m boston_housing_prediction -h
 <!--_For more examples and usage, please refer to the [Wiki][wiki]._-->
 
 ## Release History
+*   0.2.3
+    *   choosing alpha is now possible
+    *   you can leave inputs empty and it will choose default values
+    *   bugfixes like #25 and more
+    *   uploaded pre-trained models that can be downloaded
+
 *   0.2.2
     *   fix negative input for training of model #24
     *   fix negative output of predictions #24
