@@ -206,7 +206,7 @@ def visualize(args, df_data, parameter_list: list) -> None:
     # get points for line
     X = []
     Y = []
-    for i in range(-10, 14):
+    for i in range(5, 20):
         X.append(i * 0.1)
         Y.append(weights_bias[0] * (i * 0.1) + weights_bias[1])
 

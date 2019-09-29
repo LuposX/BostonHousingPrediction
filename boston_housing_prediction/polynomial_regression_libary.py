@@ -45,11 +45,11 @@ class PolynomialRegression:
                     print(str(self.alpha))
 
                 alpha = float(alpha)
-                if alpha > 0:
+                if 0 < alpha < 1:
                     self.alpha = alpha
                     break
                 print(" ")
-                print("Please don't input negative numbers :)")
+                print("Please input a number between 0 and 1 :)")
             except ValueError:
                 print(" ")
                 print("Invalid Input!")

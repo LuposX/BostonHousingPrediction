@@ -40,34 +40,34 @@ class LinearRegression:
                     print(str(self.alpha))
 
                 alpha = float(alpha)
-                if alpha > 0:
+                if 0 < alpha < 1:
                     self.alpha = alpha
+                    break
+                print(" ")
+                print("Please input a number between 0 and 1 :)")
+            except ValueError:
+                print(" ")
+                print("Invalid Input!")
+
+        # get epochs for our model
+        while True:
+            try:
+                # get epochs for our model
+                epochs = input("Please type the numbers of epoch you want to train: ") or self.epochs
+
+                # if standart epochs value print the value
+                if epochs == self.epochs:
+                    print(str(self.epochs))
+
+                epochs = int(epochs)
+                if epochs > 0:
+                    self.epochs = epochs
                     break
                 print(" ")
                 print("Please don't input negative numbers :)")
             except ValueError:
                 print(" ")
                 print("Invalid Input!")
-
-            # get epochs for our model
-            while True:
-                try:
-                    # get epochs for our model
-                    epochs = input("Please type the numbers of epoch you want to train: ") or self.epochs
-
-                    # if standart epochs value print the value
-                    if epochs == self.epochs:
-                        print(str(self.epochs))
-
-                    epochs = int(epochs)
-                    if epochs > 0:
-                        self.epochs = epochs
-                        break
-                    print(" ")
-                    print("Please don't input negative numbers :)")
-                except ValueError:
-                    print(" ")
-                    print("Invalid Input!")
 
         start_time = time.time()
         for _ in range(self.epochs):
