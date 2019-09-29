@@ -29,24 +29,45 @@ class LinearRegression:
     # training our model
     def train(self) -> None:
 
+        # getting the learning rate for the model
         while True:
             try:
-                # get input for our model
-                epochs = input("Please type the numbers of epoch you want to train: ") or self.epochs
+                # getting the learning rate
+                alpha = input("Please type the value of learning rate you want to use: ") or self.alpha
 
                 # if standart epochs value print the value
-                if epochs == self.epochs:
-                    print(str(self.epochs))
+                if alpha == self.alpha:
+                    print(str(self.alpha))
 
-                epochs = int(epochs)
-                if epochs > 0:
-                    self.epochs = epochs
+                alpha = float(alpha)
+                if alpha > 0:
+                    self.alpha = alpha
                     break
                 print(" ")
                 print("Please don't input negative numbers :)")
             except ValueError:
                 print(" ")
                 print("Invalid Input!")
+
+            # get epochs for our model
+            while True:
+                try:
+                    # get epochs for our model
+                    epochs = input("Please type the numbers of epoch you want to train: ") or self.epochs
+
+                    # if standart epochs value print the value
+                    if epochs == self.epochs:
+                        print(str(self.epochs))
+
+                    epochs = int(epochs)
+                    if epochs > 0:
+                        self.epochs = epochs
+                        break
+                    print(" ")
+                    print("Please don't input negative numbers :)")
+                except ValueError:
+                    print(" ")
+                    print("Invalid Input!")
 
         start_time = time.time()
         for _ in range(self.epochs):

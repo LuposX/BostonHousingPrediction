@@ -34,6 +34,26 @@ class PolynomialRegression:
 
     # training our model
     def train(self) -> None:
+        # getting the learning rate for the model
+        while True:
+            try:
+                # getting the learning rate
+                alpha = input("Please type the value of learning rate you want to use: ") or self.alpha
+
+                # if standart epochs value print the value
+                if alpha == self.alpha:
+                    print(str(self.alpha))
+
+                alpha = float(alpha)
+                if alpha > 0:
+                    self.alpha = alpha
+                    break
+                print(" ")
+                print("Please don't input negative numbers :)")
+            except ValueError:
+                print(" ")
+                print("Invalid Input!")
+
         # exits while loop when right inputs got inserted
         while True:
             try:
