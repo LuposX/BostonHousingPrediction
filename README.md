@@ -31,7 +31,7 @@ To see the help(for extra options) do:
 $ python -m boston_housing_prediction -h
 ```  
 
-<!--_For more examples and usage, please refer to the [Wiki][wiki]._-->
+<!--__For more examples and usage, please refer to the [Wiki][wiki]._-->
 
 ## Release History
 *   0.2.3
