@@ -138,11 +138,11 @@ class LinearRegression:
 
     # saves weight and bias
     def save(self) -> None:
-        filename = "linear_regression_housing_weights.csv"
-        row = [["weight_bias"], [float(self.w1)], [float(self.bias)]]
+        filename = "linear_regression_housing_weights.txt"
+        weights = [self.w1, self.bias]
         with open(filename, "w+", newline='') as writeFile:
-            writer = csv.writer(writeFile)
-            writer.writerows(row)
+            for i in weights:
+                writeFile.write(str(i) + "\n")
 
         writeFile.close()
 

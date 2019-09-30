@@ -159,8 +159,11 @@ def preproc_data(df: object, args) -> list:
 
 
 def hypothesis_pol(weights, f1, f2, f3, bias):
-    pred = round(weights[0] * f1 + weights[1] * f1 ** 2 + weights[2] * f2 + weights[3] * f2 ** 2 + \
-                 weights[4] * f3 + weights[5] * f3 ** 2 + weights[6] * bias, 4)
+    pred = weights[0] * f1 + weights[1] * f1 ** 2 + weights[2] * f1 ** 3 + weights[3] * f1 ** 3 + \
+           weights[4] * f2 + weights[5] * f2 ** 2 + weights[6] * f2 ** 3 + weights[7] * f2 ** 3 + \
+           weights[8] * f3 + weights[9] * f3 ** 2 + weights[10] * f3 ** 3 + weights[11] * f3 ** 3 + \
+           weights[12] * bias
+
     return pred
 
 # visualize our model. the function visualize() is not in the class model so that we can use multiprocessing.
@@ -173,6 +176,9 @@ def visualize(args, df_data, parameter_list: list) -> None:
     data_train = parameter_list[4]
     target_train = parameter_list[5]
     x_train_loose = parameter_list[6]
+
+    data_test = df_data[1]["RM"].tolist()
+    target_test = df_data[1]["MEDV"].tolist()
 
     # prints Mean loss of last epoch
     if not args.infile:
@@ -220,7 +226,9 @@ def visualize(args, df_data, parameter_list: list) -> None:
             plt.xlabel("Average number of rooms per dwelling(Wohnung)")
             plt.ylabel("Median value of owner-occupied homes in 1000$")
             sns.lineplot(x=X, y=Y)
-            sns.scatterplot(x=data_train, y=target_train, color="green")
+            sns.scatterplot(x=data_train, y=target_train, color="orange", label="train data")
+            sns.scatterplot(x=data_test, y=target_test, color="green", label="test data")
+            plt.legend()
         elif args.model == "polynomial_regression":
             v_model_poly("RM", "LSTAT", weights_bias, data_train, target_train)
             v_model_poly("RM", "PTRATIO", weights_bias, data_train, target_train)
@@ -245,7 +253,7 @@ def visualize(args, df_data, parameter_list: list) -> None:
         plt.show()
 
 
-def v_model_poly(x_axis, y_axis, weights_bias, data_train, target_train):
+def v_model_poly(x_axis, y_axis, weights, data_train, target_train):
     # create our figure. With size of the figure and specifying the art of diagrams we use "3d"
     fig = plt.figure(figsize=(10, 7))
     ax = fig.gca(projection='3d')
@@ -257,9 +265,12 @@ def v_model_poly(x_axis, y_axis, weights_bias, data_train, target_train):
 
     f1, f2 = np.meshgrid(f1, f2)
     # z corosponds to medv
-    Z = weights_bias[0] * f1 + weights_bias[1] * f1 ** 2 + weights_bias[2] * f2 + weights_bias[3] * f2 ** 2 + \
-        weights_bias[4] * f3 + \
-        weights_bias[5] * f3 ** 2 + weights_bias[6] * 1
+    # hypothesis_pol(weights, f1, f2, f3, bias):
+    # Z = weights[0] * f1 + weights[1] * f1 ** 2 + weights[2] * f2 + weights[3] * f2 ** 2 + \
+    #     weights[4] * f3 + \
+    #     weights[5] * f3 ** 2 + weights[6] * 1
+
+    Z = hypothesis_pol(weights, f1, f2, f3, 1)
 
     # ploting our model
     ax.plot_surface(f1, f2, Z, alpha=0.3, edgecolors='grey')

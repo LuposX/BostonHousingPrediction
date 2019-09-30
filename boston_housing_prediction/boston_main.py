@@ -98,8 +98,8 @@ def main():
                 sys.exit(1)  # exit the script sucessful
 
             try:
-                model.w1 = float(file_list[1])
-                model.bias = float(file_list[2])
+                model.w1 = float(file_list[0])
+                model.bias = float(file_list[1])
             except ValueError as e:
                 print(str(e))
 
@@ -112,7 +112,7 @@ def main():
 
         # visualizing is in a new process
         visualize_process = mp.Process(target=visualize,
-                                       args=(args, df_data, list_process_arg))  # use "args" if arguments are needed
+                                       args=(args, df_args, list_process_arg))  # use "args" if arguments are needed
         visualize_process.start()
         if args.predict_on:
             model.predic(visualize_process, args_normalization)  # make preictions with the model
@@ -153,7 +153,7 @@ def main():
 
         # visualizing is in a new process
         visualize_process = mp.Process(target=visualize,
-                                       args=(args, df_data, list_process_arg))  # use "args" if arguments are needed
+                                       args=(args, df_args, list_process_arg))  # use "args" if arguments are needed
         visualize_process.start()
         if args.predict_on:
             model_poly.predic(visualize_process, args_normalization)  # make preictions with the model
