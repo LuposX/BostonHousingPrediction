@@ -17,7 +17,7 @@ def sigmoid(x: float) -> float:
 
 
 def loss(pred_target: float, real_traget: float) -> float:
-    return round(float(np.sqrt((pred_target - real_traget) ** 2)), 4)
+    return round(float((pred_target - real_traget) ** 2), 4)
 
 
 def get_Data() -> object:
@@ -135,7 +135,7 @@ def preproc_data(df: object, args) -> list:
 
         return df_new_train, df_new_test, df_new_range, df_new_mean
 
-    elif args.model == "polynomial_regression":
+    elif args.model == "polynomial_regression" or args.model == "normal_equation":
         df_new = df
 
         # normalization variables for polynomial regression
@@ -159,49 +159,67 @@ def preproc_data(df: object, args) -> list:
 
 
 def hypothesis_pol(weights, f1, f2, f3, bias):
-    pred = weights[0] * f1 + weights[1] * f1 ** 2 + weights[2] * f1 ** 3 + weights[3] * f1 ** 3 + \
-           weights[4] * f2 + weights[5] * f2 ** 2 + weights[6] * f2 ** 3 + weights[7] * f2 ** 3 + \
-           weights[8] * f3 + weights[9] * f3 ** 2 + weights[10] * f3 ** 3 + weights[11] * f3 ** 3 + \
+    pred = weights[0] * f1 + weights[1] * f1 ** 2 + weights[2] * f1 ** 3 + weights[3] * f1 ** 4 + \
+           weights[4] * f2 + weights[5] * f2 ** 2 + weights[6] * f2 ** 3 + weights[7] * f2 ** 4 + \
+           weights[8] * f3 + weights[9] * f3 ** 2 + weights[10] * f3 ** 3 + weights[11] * f3 ** 4 + \
            weights[12] * bias
 
     return pred
 
 # visualize our model. the function visualize() is not in the class model so that we can use multiprocessing.
 def visualize(args, df_data, parameter_list: list) -> None:
-    # unzip the argument list gotten from model.getter_viszulation()
-    weights_bias = parameter_list[0]
-    train_loss_history = parameter_list[1]
-    test_loss_history = parameter_list[2]
-    evaluation_time = parameter_list[3]
-    data_train = parameter_list[4]
-    target_train = parameter_list[5]
-    x_train_loose = parameter_list[6]
 
+    # unzip the argument list gotten from model.getter_viszulation()
+    if args.model == "linear_regression" or args.model == "polynomial_regression":
+        weights = parameter_list[0]
+        train_loss_history = parameter_list[1]
+        test_loss_history = parameter_list[2]
+        evaluation_time = parameter_list[3]
+        data_train = parameter_list[4]
+        target_train = parameter_list[5]
+        x_train_loose = parameter_list[6]
+    elif args.model == "normal_equation":
+        weights = parameter_list[0]
+        evaluation_time = parameter_list[1]
+
+    if args.model == "normal_equation":
+        # train data
+        data_train = df_data[0].iloc[:,  df_data[0].columns != "MEDV"]   # get all eleements from the df except "medv"
+        target_train = df_data[0]["MEDV"].tolist()
+
+    # test data
     data_test = df_data[1]["RM"].tolist()
     target_test = df_data[1]["MEDV"].tolist()
 
     # prints Mean loss of last epoch
-    if not args.infile:
+    if not args.infile and not args.model == "normal_equation":
         print(" ")
         print("Mean-train loss of last epoch: ", str(round(train_loss_history[-1], 6)))
         print("Mean-test loss of last epoch:  ", str(round(test_loss_history[-1], 6)))
         print("Time needed for training:      ", str(round(evaluation_time, 4)) + "s.")
 
+    # elif args.model == "normal_equation":
+    #     loss =
+    #     print(" ")
+    #     print("Mean-train loss: ", str(round(, 6)))
+    #     print("Mean-test loss:  ", str(round(, 6)))
+    #     print("Time needed for training:      ", str(round(evaluation_time, 4)) + "s.")
+
     # communication is key
     if args.fd == "full" and not args.infile:
         print(" ")
         print("-----------------------------------------------------------")
-        # print for every value in the list weights_bias
-        for i in range(len(weights_bias)):
-            print("Value of W" + str(i) + " after training:   ", weights_bias[i])
+        # print for every value in the list weights
+        for i in range(len(weights)):
+            print("Value of W" + str(i) + " after training:   ", weights[i])
 
         print("-----------------------------------------------------------")
         print(" ")
     elif args.infile:
         print(" ")
-        # print for every value in the list weights_bias
-        for i in range(len(weights_bias)):
-            print("Value of W" + str(i) + " after training:   ", weights_bias[i])
+        # print for every value in the list weights
+        for i in range(len(weights)):
+            print("Value of W" + str(i) + " after training:   ", weights[i])
 
         print(" ")
 
@@ -214,7 +232,7 @@ def visualize(args, df_data, parameter_list: list) -> None:
     Y = []
     for i in range(5, 20):
         X.append(i * 0.1)
-        Y.append(weights_bias[0] * (i * 0.1) + weights_bias[1])
+        Y.append(weights[0] * (i * 0.1) + weights[1])
 
 
     # plot our descion border and datapoints
@@ -229,14 +247,19 @@ def visualize(args, df_data, parameter_list: list) -> None:
             sns.scatterplot(x=data_train, y=target_train, color="orange", label="train data")
             sns.scatterplot(x=data_test, y=target_test, color="green", label="test data")
             plt.legend()
-        elif args.model == "polynomial_regression":
-            v_model_poly("RM", "LSTAT", weights_bias, data_train, target_train)
-            v_model_poly("RM", "PTRATIO", weights_bias, data_train, target_train)
 
+        elif args.model == "polynomial_regression":
+            v_model_poly("RM", "LSTAT", weights, data_train, target_train, args)
+            v_model_poly("RM", "PTRATIO", weights, data_train, target_train, args)
+
+        elif args.model == "normal_equation":
+            v_model_poly("RM", "LSTAT", weights, data_train, target_train, args)
+            v_model_poly("RM", "PTRATIO", weights, data_train, target_train, args)
 
     # convert our loss arrays into a dataframe from pandas
-    data = {"x": x_train_loose, "train": train_loss_history, "test": test_loss_history}
-    data = pd.DataFrame(data, columns=["x", "train", "test"])
+    if not args.model == "normal_equation":
+        data = {"x": x_train_loose, "train": train_loss_history, "test": test_loss_history}
+        data = pd.DataFrame(data, columns=["x", "train", "test"])
 
     # plot loss over time
     if args.v_loss and not args.infile:
@@ -270,7 +293,9 @@ def v_model_poly(x_axis, y_axis, weights, data_train, target_train):
     #     weights[4] * f3 + \
     #     weights[5] * f3 ** 2 + weights[6] * 1
 
-    Z = hypothesis_pol(weights, f1, f2, f3, 1)
+    if args.model == "polynomial_regression":
+        Z = hypothesis_pol(weights, f1, f2, f3, 1)
+    elif
 
     # ploting our model
     ax.plot_surface(f1, f2, Z, alpha=0.3, edgecolors='grey')

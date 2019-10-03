@@ -8,7 +8,7 @@ class PolynomialRegression:
         self.weights = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
         self.bias = 1
 
-        self.epochs = 50   # how man epoch we train
+        self.epochs = 40   # how man epoch we train
         self.alpha = 0.003  # learning rate
 
         # initiate variables to visualize loss history
@@ -35,9 +35,9 @@ class PolynomialRegression:
 
     # our hypothesis/ what our model predicts
     def hypothesis(self, weights, f1, f2, f3, bias):
-        pred = weights[0] * f1 + weights[1] * f1 ** 2 + weights[2] * f1 ** 3 + weights[3] * f1 ** 3 + \
-               weights[4] * f2 + weights[5] * f2 ** 2 + weights[6] * f2 ** 3 + weights[7] * f2 ** 3 + \
-               weights[8] * f3 + weights[9] * f3 ** 2 + weights[10] * f3 ** 3 + weights[11] * f3 ** 3 + \
+        pred = weights[0] * f1 + weights[1] * f1 ** 2 + weights[2] * f1 ** 3 + weights[3] * f1 ** 4 + \
+               weights[4] * f2 + weights[5] * f2 ** 2 + weights[6] * f2 ** 3 + weights[7] * f2 ** 4 + \
+               weights[8] * f3 + weights[9] * f3 ** 2 + weights[10] * f3 ** 3 + weights[11] * f3 ** 4 + \
                weights[12] * bias
 
         return pred
