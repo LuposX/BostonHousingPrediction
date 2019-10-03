@@ -39,6 +39,8 @@ class NormalEquation():
         # misc
         self.duration_time = 0
         self.args = args
+
+
     def train(self):
         # for caluclating how long it took to calculate
         start_time = time.time()

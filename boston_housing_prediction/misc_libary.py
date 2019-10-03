@@ -166,6 +166,16 @@ def hypothesis_pol(weights, f1, f2, f3, bias):
 
     return pred
 
+
+# our hypothesis/ what our model predicts
+def hypothesis_normal(weights, f1, f2, f3, bias):
+    pred = weights[0] * f1 + weights[1] * f1 ** 2 + weights[2] * f1 ** 3 + \
+           weights[3] * f2 + weights[4] * f2 ** 2 + weights[5] * f2 ** 3 + \
+           weights[6] * f3 + weights[7] * f3 ** 2 + weights[8] * f3 ** 3 + \
+           weights[9] * bias
+
+    return pred
+
 # visualize our model. the function visualize() is not in the class model so that we can use multiprocessing.
 def visualize(args, df_data, parameter_list: list) -> None:
 
@@ -276,15 +286,21 @@ def visualize(args, df_data, parameter_list: list) -> None:
         plt.show()
 
 
-def v_model_poly(x_axis, y_axis, weights, data_train, target_train):
+def v_model_poly(x_axis, y_axis, weights, data_train, target_train, args):
     # create our figure. With size of the figure and specifying the art of diagrams we use "3d"
     fig = plt.figure(figsize=(10, 7))
     ax = fig.gca(projection='3d')
 
     # data gets created for visualizing our model
-    f1 = np.arange(-0.7, 1.2, 0.1)
-    f2 = np.arange(-0.7, 1.2, 0.1)
-    f3 = np.arange(-0.7, 1.2, 0.1)
+    if args.model == "polynomial_regression":
+        f1 = np.arange(-0.7, 1.2, 0.1)
+        f2 = np.arange(-0.7, 1.2, 0.1)
+        f3 = np.arange(-0.7, 1.2, 0.1)
+
+    elif args.model == "normal_equation":
+        f1 = np.arange(-0.7, 1.2, 0.1)
+        f2 = np.arange(-0.7, 1.2, 0.1)
+        f3 = np.arange(-0.7, 1.2, 0.1) 
 
     f1, f2 = np.meshgrid(f1, f2)
     # z corosponds to medv
@@ -295,7 +311,8 @@ def v_model_poly(x_axis, y_axis, weights, data_train, target_train):
 
     if args.model == "polynomial_regression":
         Z = hypothesis_pol(weights, f1, f2, f3, 1)
-    elif
+    elif args.model == "normal_equation":
+        Z = hypothesis_normal(weights, f1, f2, f3, 1)
 
     # ploting our model
     ax.plot_surface(f1, f2, Z, alpha=0.3, edgecolors='grey')
