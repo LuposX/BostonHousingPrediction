@@ -185,7 +185,7 @@ def main():
 
         # visualizing is in a new process
         visualize_process = mp.Process(target=visualize,
-                                       args=(args, df_args, list_process_arg))  # use "args" if arguments are needed
+                                       args=(args, df_data, list_process_arg))  # use "args" if arguments are needed
         visualize_process.start()
         # END: visualisation
         # ------------------------

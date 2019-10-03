@@ -1,6 +1,7 @@
 import urllib
 import os
 from os import path
+from random import sample
 
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import axes3d, Axes3D   # needed
@@ -188,18 +189,19 @@ def visualize(args, df_data, parameter_list: list) -> None:
         data_train = parameter_list[4]
         target_train = parameter_list[5]
         x_train_loose = parameter_list[6]
+
+        # test data
+        data_test = df_data["RM"].tolist()
+        target_test = df_data["MEDV"].tolist()
+
     elif args.model == "normal_equation":
         weights = parameter_list[0]
         evaluation_time = parameter_list[1]
 
     if args.model == "normal_equation":
         # train data
-        data_train = df_data[0].iloc[:,  df_data[0].columns != "MEDV"]   # get all eleements from the df except "medv"
-        target_train = df_data[0]["MEDV"].tolist()
-
-    # test data
-    data_test = df_data[1]["RM"].tolist()
-    target_test = df_data[1]["MEDV"].tolist()
+        data_train_normal = df_data.iloc[:,  df_data.columns != "MEDV"]   # get all eleements from the df except "medv"
+        target_train_normal = df_data["MEDV"].tolist()
 
     # prints Mean loss of last epoch
     if not args.infile and not args.model == "normal_equation":
@@ -263,8 +265,8 @@ def visualize(args, df_data, parameter_list: list) -> None:
             v_model_poly("RM", "PTRATIO", weights, data_train, target_train, args)
 
         elif args.model == "normal_equation":
-            v_model_poly("RM", "LSTAT", weights, data_train, target_train, args)
-            v_model_poly("RM", "PTRATIO", weights, data_train, target_train, args)
+            v_model_poly("RM", "LSTAT", weights, data_train_normal, target_train_normal, args)
+            v_model_poly("RM", "PTRATIO", weights, data_train_normal, target_train_normal, args)
 
     # convert our loss arrays into a dataframe from pandas
     if not args.model == "normal_equation":
@@ -298,9 +300,14 @@ def v_model_poly(x_axis, y_axis, weights, data_train, target_train, args):
         f3 = np.arange(-0.7, 1.2, 0.1)
 
     elif args.model == "normal_equation":
-        f1 = np.arange(-0.7, 1.2, 0.1)
-        f2 = np.arange(-0.7, 1.2, 0.1)
-        f3 = np.arange(-0.7, 1.2, 0.1) 
+        f1 = np.arange(4, 8, 0.17)  # RM
+        f2 = np.arange(11, 35, 1)  # LSTAT
+        f3 = np.arange(14, 22, 0.34)  # PTRATIO
+
+        print(len(f1))
+        print(len(f2))
+        print(len(f3))
+        print(" ")
 
     f1, f2 = np.meshgrid(f1, f2)
     # z corosponds to medv
@@ -318,9 +325,16 @@ def v_model_poly(x_axis, y_axis, weights, data_train, target_train, args):
     ax.plot_surface(f1, f2, Z, alpha=0.3, edgecolors='grey')
 
     # ploting our data points from our dataframe
-    X = data_train[x_axis]
-    Y = data_train[y_axis]
-    Z = target_train
+    if args.model == "polynomial_regression":
+        X = data_train[x_axis]
+        Y = data_train[y_axis]
+        Z = target_train
+
+    elif args.model == "normal_equation":
+        X = data_train[x_axis]
+        Y = data_train[y_axis]
+        Z = target_train
+
     ax.scatter3D(X, Y, Z, c=Z, s=40, alpha=0.9)  # cmap=cm.coolwarm
 
     # change the inital view point
@@ -335,9 +349,9 @@ def v_model_poly(x_axis, y_axis, weights, data_train, target_train, args):
     ax.set_zlabel("MEDV")
 
     # hide the ticks of the label
-    ax.axes.xaxis.set_ticklabels([])
-    ax.axes.yaxis.set_ticklabels([])
-    ax.axes.zaxis.set_ticklabels([])
+    #ax.axes.xaxis.set_ticklabels([])
+    #ax.axes.yaxis.set_ticklabels([])
+    #ax.axes.zaxis.set_ticklabels([])
 
     # hide the grid
     ax.grid(False)
