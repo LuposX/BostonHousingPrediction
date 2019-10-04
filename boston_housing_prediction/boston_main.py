@@ -12,6 +12,7 @@ from linear_regression_libary import LinearRegression
 from polynomial_regression_libary import PolynomialRegression
 from misc_libary import *
 from normal_equation import *
+from visualize_libary import *
 
 # TODO: fix train and test loss
 
