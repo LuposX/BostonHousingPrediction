@@ -108,7 +108,7 @@ def main():
 
         # if save parameter is true model gets saved
         if args.save and not args.infile:
-            model_line.save()
+           save([model_line.w1, model_line.bias], args)
 
         # START: visualisation
         # ------------------------
@@ -125,7 +125,7 @@ def main():
         if args.predict_on:
             model_line.predic(visualize_process, args_normalization)  # make preictions with the model
 
-    elif args.model == "polynomial_regression":
+    elif args.model == "polynomial_regression" and not args.h_features:
         print(" ")
         print("Polynomial-regression with GradientDescent")
         print("--------------------------------------")
@@ -154,7 +154,7 @@ def main():
 
         # if save parameter is true model gets saved
         if args.save and not args.infile:
-            model_poly.save()
+            save(model_poly.weights, args)
 
         # START: visualisation
         # ------------------------
@@ -171,13 +171,17 @@ def main():
         if args.predict_on:
             model_poly.predic(visualize_process, args_normalization)  # make preictions with the model
 
-    elif args.model == "normal_equation":
+    elif args.model == "normal_equation" and not args.h_features:
         print(" ")
         print("Polynomial-regression with NormalEquation")
         print("--------------------------------------")
 
         model_norm = NormalEquation(df_data, args)
         model_norm.train()
+
+        # if save parameter is true model gets saved
+        if args.save and not args.infile:
+            save(model_norm.weights, args)
 
         # START: visualisation
         # ------------------------

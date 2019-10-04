@@ -167,3 +167,21 @@ def parse_bool_args(args):
         args.v_data = False
     if args.v_data == "True" or args.v_data == "true" or args.v_data == "true ":
         args.v_data = True
+
+
+# saves weight and bias
+def save(weights, args) -> None:
+    if args.model == "polynomial_regression":
+        filename = "polynomial_regression_housing_weights.txt"
+
+    elif args.model == "linear_regression":
+        filename = "linear_regression_housing_weights.txt"
+
+    elif args.model == "normal_equation":
+        filename = "normal_equation_housing_weights.txt"
+
+    with open(filename, "w+", newline='') as writeFile:
+        for i in weights:
+            writeFile.write(str(i) + "\n")
+
+    writeFile.close()

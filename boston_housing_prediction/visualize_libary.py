@@ -217,13 +217,18 @@ def visualize(args, df_data, parameter_list: list) -> None:
 
     # plot loss over time
     if args.v_loss and not args.infile:
-        sns.set_style("darkgrid")
-        plt.figure(figsize=(12, 6))
-        sns.lineplot(x="x", y="train", data=data, label="train", color="orange")
-        sns.lineplot(x="x", y="test", data=data, label="test", color="Violet")
-        plt.xlabel("Time In Epochs")
-        plt.ylabel("Loss")
-        plt.title("Loss over Time")
+        if not args.model == "normal_equation":
+            sns.set_style("darkgrid")
+            plt.figure(figsize=(12, 6))
+            sns.lineplot(x="x", y="train", data=data, label="train", color="orange")
+            sns.lineplot(x="x", y="test", data=data, label="test", color="Violet")
+            plt.xlabel("Time In Epochs")
+            plt.ylabel("Loss")
+            plt.title("Loss over Time")
+
+        else:
+            print(" ")
+            print("This model doesn't support this feature.")
 
     # plt.show() when we have a diagram
     if args.v_loss or args.v_model or args.v_data:

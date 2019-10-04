@@ -186,15 +186,6 @@ class PolynomialRegression:
     def getter_viszualtion(self):
         return self.weights, self.train_loss_history, self.test_loss_history, self.evaluation_time, self.data_train, self.target_train, self.x_train_loose
 
-    # saves weight and bias
-    def save(self) -> None:
-        filename = "polynomial_regression_housing_weights.txt"
-        with open(filename, "w+", newline='') as writeFile:
-            for i in self.weights:
-                writeFile.write(str(i) + "\n")
-
-        writeFile.close()
-
     # predicting with the model
     def predic(self, visualize_process, args_normalization) -> None:
         df_range = args_normalization[0]

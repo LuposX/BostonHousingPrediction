@@ -136,16 +136,6 @@ class LinearRegression:
             end_time = time.time()
             self.evaluation_time = end_time - start_time
 
-    # saves weight and bias
-    def save(self) -> None:
-        filename = "linear_regression_housing_weights.txt"
-        weights = [self.w1, self.bias]
-        with open(filename, "w+", newline='') as writeFile:
-            for i in weights:
-                writeFile.write(str(i) + "\n")
-
-        writeFile.close()
-
     # predicting with the model
     def predic(self, visualize_process, args_normalization) -> None:
         df_range = args_normalization[0]

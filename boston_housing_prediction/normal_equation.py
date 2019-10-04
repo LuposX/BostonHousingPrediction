@@ -33,7 +33,7 @@ class NormalEquation():
         # ---------------------------------------
 
         # init weights
-        self.weight = []
+        self.weights = []
         self.bias = 1
 
         # misc
@@ -48,6 +48,7 @@ class NormalEquation():
         # calculating our weights with the formula:
         # theta = (XT * X) ^-1  * (XT * y)
         self.weights = np.dot(np.linalg.inv(np.dot(self.df_data.transpose(), self.df_data)), np.dot(self.df_data.transpose(), self.df_target))
+        self.weights = self.weights.flatten()
 
         # removes scientific notation e.g. 2.2331 e-2
         np.set_printoptions(suppress=True)
