@@ -34,6 +34,9 @@ $ python -m boston_housing_prediction -h
 <!--__For more examples and usage, please refer to the [Wiki][wiki]._-->
 
 ## Release History
+*   0.3.0
+    *   added normal_equation
+
 *   0.2.3
     *   choosing alpha is now possible
     *   you can leave inputs empty and it will choose default values
@@ -76,7 +79,7 @@ $ python -m boston_housing_prediction -h
     
     *   linear regression :heavy_check_mark:
     *   polynomial_regression :heavy_check_mark:
-    *   normal equation :x:
+    *   normal equation :heavy_check_mark:
     *   svm :x:
     *   neural network :x:
 

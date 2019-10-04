@@ -5,10 +5,10 @@ import sys
 class PolynomialRegression:
     def __init__(self, df, args):
         # weight/bias init
-        self.weights = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        self.weights = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
         self.bias = 1
 
-        self.epochs = 30   # how man epoch we train
+        self.epochs = 40   # how man epoch we train
         self.alpha = 0.003  # learning rate
 
         # initiate variables to visualize loss history
@@ -26,10 +26,20 @@ class PolynomialRegression:
         self.evaluation_time = 0
         self.args = args
 
+        # our hypothesis/ what our model predicts
+
+    # def hypothesis(self, weights, f1, f2, f3, bias):
+    #     pred = weights[0] * f1 + weights[1] * f1 ** 2 + weights[2] * f1 ** 3 + weights[3] * f2 + weights[4] * f2 ** 2 + \
+    #            weights[5] * f2 ** 3 + weights[6] * f3 + weights[7] * f3 ** 2 + weights[8] * f3 ** 3 + weights[9] * bias
+    #     return pred
+
     # our hypothesis/ what our model predicts
     def hypothesis(self, weights, f1, f2, f3, bias):
-        pred = weights[0] * f1 + weights[1] * f1 ** 2 + weights[2] * f1 ** 3 + weights[3] * f2 + weights[4] * f2 ** 2 + \
-                          weights[5] * f2 ** 3 + weights[6] * f3 + weights[7] * f3 ** 2 + weights[8] * f3 ** 3 + weights[9] * bias
+        pred = weights[0] * f1 + weights[1] * f1 ** 2 + weights[2] * f1 ** 3 + weights[3] * f1 ** 4 + \
+               weights[4] * f2 + weights[5] * f2 ** 2 + weights[6] * f2 ** 3 + weights[7] * f2 ** 4 + \
+               weights[8] * f3 + weights[9] * f3 ** 2 + weights[10] * f3 ** 3 + weights[11] * f3 ** 4 + \
+               weights[12] * bias
+
         return pred
 
     # training our model
@@ -94,14 +104,20 @@ class PolynomialRegression:
                 # training our weights
                 self.weights[0] = self.weights[0] - self.alpha * (error * f1)
                 self.weights[1] = self.weights[1] - self.alpha * (2 * error * f1)
-                self.weights[2] = self.weights[2] - self.alpha * (3 * error * f2 ** 2)
-                self.weights[3] = self.weights[3] - self.alpha * (error * f2)
-                self.weights[4] = self.weights[4] - self.alpha * (2 * error * f2)
-                self.weights[5] = self.weights[5] - self.alpha * (3 * error * f2 ** 2)
-                self.weights[6] = self.weights[6] - self.alpha * (error * f3)
-                self.weights[7] = self.weights[7] - self.alpha * (2 * error * f3)
-                self.weights[8] = self.weights[8] - self.alpha * (3 * error * f3 ** 2)
-                self.weights[9] = self.weights[9] - self.alpha * (error * self.bias)
+                self.weights[2] = self.weights[2] - self.alpha * (3 * error * f1 ** 2)
+                self.weights[3] = self.weights[3] - self.alpha * (4 * error * f1 ** 3)
+
+                self.weights[4] = self.weights[4] - self.alpha * (error * f2)
+                self.weights[5] = self.weights[5] - self.alpha * (2 * error * f2)
+                self.weights[6] = self.weights[6] - self.alpha * (3 * error * f2 ** 2)
+                self.weights[7] = self.weights[7] - self.alpha * (4 * error * f2 ** 3)
+
+                self.weights[8] = self.weights[8] - self.alpha * (error * f3)
+                self.weights[9] = self.weights[9] - self.alpha * (2 * error * f3)
+                self.weights[10] = self.weights[10] - self.alpha * (3 * error * f3 ** 2)
+                self.weights[11] = self.weights[11] - self.alpha * (4 * error * f3 ** 3)
+
+                self.weights[12] = self.weights[12] - self.alpha * (error * self.bias)
 
                 # sums train loss
                 train_loss = loss(pred_target, self.target_train[i])
@@ -169,15 +185,6 @@ class PolynomialRegression:
     # a getter for the viszulation function
     def getter_viszualtion(self):
         return self.weights, self.train_loss_history, self.test_loss_history, self.evaluation_time, self.data_train, self.target_train, self.x_train_loose
-
-    # saves weight and bias
-    def save(self) -> None:
-        filename = "polynomial_regression_housing_weights.txt"
-        with open(filename, "w+", newline='') as writeFile:
-            for i in self.weights:
-                writeFile.write(str(i) + "\n")
-
-        writeFile.close()
 
     # predicting with the model
     def predic(self, visualize_process, args_normalization) -> None:

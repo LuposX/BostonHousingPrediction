@@ -9,7 +9,7 @@ with open('requirements.txt') as f:
 setuptools.setup(
 	# Information about project
     name="boston_housing_prediction",
-    version="0.2.2a0",
+    version="0.3.0",
     author="Lupos",
     author_email="buisnessgithublupos@gmail.com",
 	url="https://github.com/LuposX/BostonHousingPrediction",

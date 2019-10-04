@@ -19,10 +19,13 @@ Folder Hierarchy:
 └──boston_housing_prediction
 	├──__init__.py
 	├──__main__.py
+	├──linear_regression_model.py
+	├──polynomial_regression_model.py
+	├──normal_equation_model.py
 	├──boston_main.py
-	├──linear_regression_libary.py
+	├──visualize_libary.py
 	├──misc_libary.py
-	├──polynomial_regression_libary.py
+
 
 --------------------------------------------------------
 Links:

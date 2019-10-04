@@ -136,16 +136,6 @@ class LinearRegression:
             end_time = time.time()
             self.evaluation_time = end_time - start_time
 
-    # saves weight and bias
-    def save(self) -> None:
-        filename = "linear_regression_housing_weights.csv"
-        row = [["weight_bias"], [float(self.w1)], [float(self.bias)]]
-        with open(filename, "w+", newline='') as writeFile:
-            writer = csv.writer(writeFile)
-            writer.writerows(row)
-
-        writeFile.close()
-
     # predicting with the model
     def predic(self, visualize_process, args_normalization) -> None:
         df_range = args_normalization[0]

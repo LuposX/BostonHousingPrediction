@@ -3,13 +3,12 @@ import multiprocessing as mp
 import random
 import sys
 
-# My Files that get imported
-# from boston_housing_prediction.linear_regression_libary import LinearRegression
-# from boston_housing_prediction.polynomial_regression_libary import PolynomialRegression
-# from boston_housing_prediction.misc_libary import *
-from linear_regression_libary import LinearRegression
-from polynomial_regression_libary import PolynomialRegression
+from linear_regression_model import *
+from polynomial_regression_model import *
+from normal_equation_model import *
 from misc_libary import *
+from misc_libary import *
+from visualize_libary import *
 
 # TODO: fix train and test loss
 
@@ -24,7 +23,7 @@ def main():
 
     # available options for the command line use
     parser.add_argument("model", help="Choose which model you want to use for prediction.",
-                        type=str, choices=["linear_regression", "polynomial_regression"])
+                        type=str, choices=["linear_regression", "polynomial_regression", "normal_equation"])
     parser.add_argument("--infile", help="If file specified model will load weights from it."
                                          "Else it will normally train.(default: no file loaded)"
                         , metavar="FILE", type=str)  # type=argparse.FileType('r', encoding='UTF-8')
@@ -42,7 +41,7 @@ def main():
                         type=str, default="False")
     parser.add_argument("--fd", metavar="FEEDBACK",
                         help="Set how much feedback you want.(Choices: %(choices)s)",
-                        type=str, choices=["full", "intermediate", "weak", "debug"], default="immediate")
+                        type=str, choices=["full", "intermediate", "weak", "debug"], default="intermediate")
     # implemented
     parser.add_argument("--save", metavar="SAVE_MODEL",
                         help="Set it to True if you want to save the model after training.(default: %(default)s)",
@@ -80,10 +79,10 @@ def main():
         print("Linear-regression")
         print("--------------------------------------")
 
-        model = LinearRegression(df_args, args)  # create our model
+        model_line = LinearRegression(df_args, args)  # create our model
 
         if not args.infile:
-            model.train()  # train our model
+            model_line.train()  # train our model
         else:
             try:
                 filename = str(args.infile)
@@ -98,28 +97,33 @@ def main():
                 sys.exit(1)  # exit the script sucessful
 
             try:
-                model.w1 = float(file_list[1])
-                model.bias = float(file_list[2])
+                model_line.w1 = float(file_list[0])
+                model_line.bias = float(file_list[1])
             except ValueError as e:
                 print(str(e))
 
         # if save parameter is true model gets saved
         if args.save and not args.infile:
-            model.save()
+           save([model_line.w1, model_line.bias], args)
 
+        # START: visualisation
+        # ------------------------
         random.seed(123)  # needed to fix some issued with multiprocessing
-        list_process_arg = model.getter_viszualtion()
+        list_process_arg = model_line.getter_viszualtion()
 
         # visualizing is in a new process
         visualize_process = mp.Process(target=visualize,
-                                       args=(args, df_data, list_process_arg))  # use "args" if arguments are needed
+                                       args=(args, df_args, list_process_arg))  # use "args" if arguments are needed
         visualize_process.start()
-        if args.predict_on:
-            model.predic(visualize_process, args_normalization)  # make preictions with the model
+        # END: visualisation
+        # ------------------------
 
-    elif args.model == "polynomial_regression":
+        if args.predict_on:
+            model_line.predic(visualize_process, args_normalization)  # make preictions with the model
+
+    elif args.model == "polynomial_regression" and not args.h_features:
         print(" ")
-        print("Polynomial-regression")
+        print("Polynomial-regression with GradientDescent")
         print("--------------------------------------")
 
         model_poly = PolynomialRegression(df_args, args)  # create our model
@@ -146,17 +150,49 @@ def main():
 
         # if save parameter is true model gets saved
         if args.save and not args.infile:
-            model_poly.save()
+            save(model_poly.weights, args)
 
+        # START: visualisation
+        # ------------------------
         random.seed(123)  # needed to fix some issued with multiprocessing
         list_process_arg = model_poly.getter_viszualtion()
 
         # visualizing is in a new process
         visualize_process = mp.Process(target=visualize,
-                                       args=(args, df_data, list_process_arg))  # use "args" if arguments are needed
+                                       args=(args, df_args, list_process_arg))  # use "args" if arguments are needed
         visualize_process.start()
+        # END: visualisation
+        # ------------------------
+
         if args.predict_on:
             model_poly.predic(visualize_process, args_normalization)  # make preictions with the model
+
+    elif args.model == "normal_equation" and not args.h_features:
+        print(" ")
+        print("Polynomial-regression with NormalEquation")
+        print("--------------------------------------")
+
+        model_norm = NormalEquation(df_data, args)
+        model_norm.train()
+
+        # if save parameter is true model gets saved
+        if args.save and not args.infile:
+            save(model_norm.weights, args)
+
+        # START: visualisation
+        # ------------------------
+        random.seed(123)  # needed to fix some issued with multiprocessing
+        list_process_arg = model_norm.getter_viszualtion()
+
+        # visualizing is in a new process
+        visualize_process = mp.Process(target=visualize,
+                                       args=(args, df_data, list_process_arg))  # use "args" if arguments are needed
+        visualize_process.start()
+        # END: visualisation
+        # ------------------------
+
+        if args.predict_on:
+            model_norm.predic(visualize_process)  # make preictions with the model
 
     # print what the feature shortcuts means
     elif args.h_features:
