@@ -8,10 +8,10 @@ import sys
 # from boston_housing_prediction.polynomial_regression_libary import PolynomialRegression
 # from boston_housing_prediction.misc_libary import *
 from future.types import no
-from linear_regression_libary import LinearRegression
-from polynomial_regression_libary import PolynomialRegression
+from linear_regression_model import *
+from polynomial_regression_model import *
+from normal_equation_model import *
 from misc_libary import *
-from normal_equation import *
 from visualize_libary import *
 
 # TODO: fix train and test loss

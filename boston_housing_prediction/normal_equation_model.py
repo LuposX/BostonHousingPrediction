@@ -157,7 +157,7 @@ class NormalEquation():
                     print("RM :" + str(rm_input))
                     print("LSTAT :" + str(lstat_input))
                     print("PTRATIO :" + str(ptratio_input))
-                    print("Is worth about: " + str(predic_target) + " in 10,000$(GER 10.000$).")
+                    print("Is worth about: " + str(round(predic_target, 8)) + " in 10,000$(GER 10.000$).")
                     print("-----------------------------------------------------------------------------")
                     print(" ")
 

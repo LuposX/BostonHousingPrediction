@@ -3,7 +3,7 @@ Author: Lupos
 Started: 08.09.2019
 Lang: Phyton
 Description: Prediction of boston housing market prices.
-version: 0.2.4
+version: 0.3.0
 
 Dataset:
 Housing Values in Suburbs of Boston

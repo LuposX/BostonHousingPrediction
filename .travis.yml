@@ -11,3 +11,4 @@ install:
 script:
   - python boston_housing_prediction/__main__.py linear_regression < testing_linear.txt
   - python boston_housing_prediction/__main__.py polynomial_regression < testing_polynomial.txt
+  - python boston_housing_prediction/__main__.py normal_equation < testing_polynomial.txt
