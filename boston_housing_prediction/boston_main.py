@@ -3,14 +3,10 @@ import multiprocessing as mp
 import random
 import sys
 
-# My Files that get imported
-# from boston_housing_prediction.linear_regression_libary import LinearRegression
-# from boston_housing_prediction.polynomial_regression_libary import PolynomialRegression
-# from boston_housing_prediction.misc_libary import *
-from future.types import no
 from linear_regression_model import *
 from polynomial_regression_model import *
 from normal_equation_model import *
+from misc_libary import *
 from misc_libary import *
 from visualize_libary import *
 
