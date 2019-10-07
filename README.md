@@ -80,7 +80,6 @@ $ python -m boston_housing_prediction -h
     *   linear regression :heavy_check_mark:
     *   polynomial_regression :heavy_check_mark:
     *   normal equation :heavy_check_mark:
-    *   svm :x:
     *   neural network :x:
 
 *   Upload pre-trained models :x: 
