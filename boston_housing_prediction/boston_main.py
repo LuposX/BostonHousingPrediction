@@ -200,7 +200,7 @@ def main():
         print("Neural-Network")
         print("--------------------------------------")
 
-        nn = NeuralNetwork([2, 2, 2], df)
+        nn = NeuralNetwork([2, 6, 4, 1], df)
         nn.forward()
 
     # print what the feature shortcuts means

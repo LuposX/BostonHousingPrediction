@@ -18,8 +18,10 @@ class NeuralNetwork:
         self.df_data_test = df[1].iloc[:, df[0].columns != "MEDV"].reset_index(drop=True)  # the ":" stands for every element in there
         self.df_target_test = df[1]["MEDV"].tolist()
 
-        # weights
+        # misc
         self.weight = self.init_weight()
+        self.layers_history = []
+        self.output_neuron_activ = 0
 
     # init the weights of the nn
     def init_weight(self) -> list:
@@ -28,9 +30,13 @@ class NeuralNetwork:
         # for input layer
         weights.append(np.ones(self.num_feature * self.list_architecture[0]).tolist())
 
+        # for hidden layers
         for i in range(0, len(self.list_architecture)):
             if len(self.list_architecture) > i + 1:
                 weights.append(np.ones(self.list_architecture[i] * self.list_architecture[i + 1]).tolist())
+
+        # for output layer
+        weights.append(np.ones(1 * self.list_architecture[-1]).tolist())
 
         return weights
 
@@ -50,24 +56,53 @@ class NeuralNetwork:
         #activ_input_layer = relu(input_layer)  # "activ" stands for activated
 
         # for amount of hidden layer
-        #for k in range(len(list_architecture) - 2):  # "- 2" because we subtract input and output layer
-        hidden_layer = np.dot(input_layer, np.reshape(self.weight[0], (self.num_feature, self.list_architecture[0])))
+        # --------------------------------------------
+        # input layer is outside of loop
+        input_layer_trans = np.reshape(input_layer, (1, self.num_feature)).flatten()
+        weights = np.asarray(np.reshape(self.weight[0], (self.num_feature, self.list_architecture[0])))
 
-        # communication is key
-        print("weights: ")
-        print(self.weight[0])
-        print("input: ")
-        print(input_layer)
+        # calculating
+        curr_layer = np.dot(input_layer_trans, weights)  # curr_layer current layer
 
-        print(" ")
-        print("output")
-        print(hidden_layer)
+        # adding to history for later use
+        self.layers_history.append(curr_layer)
 
-        # output layer
-        #output_neuron = linear()
+        for k in range(len(self.list_architecture) - 1):  # "- 1" because we subtract output layer
+            # getting input values in right shape
+            weights = np.asarray(np.reshape(self.weight[k + 1], (self.list_architecture[k], self.list_architecture[k + 1])))  # "weight[k + 1]" because weight[0] is for input layer
 
-        print(hidden_layer)
+            # calculating
+            curr_layer = np.dot(curr_layer, weights)
+            activ_curr_layer = relu(curr_layer)
 
+            # adding to history for later use
+            self.layers_history.append(activ_curr_layer)
+
+            # communication is key
+            print(" ")
+            print("------------")
+            print("weights:", weights)
+            print("shape:", weights.shape)
+
+            print(" ")
+            print("input:", curr_layer)
+            print("shape:", curr_layer.shape)
+
+            print(" ")
+            print("output:", activ_curr_layer)
+
+        # output layer is outside of loop
+        weights = np.asarray(np.reshape(self.weight[-1], (1, self.list_architecture[-1])))
+
+        # calculating
+        output_neuron = np.dot(self.layers_history[-1], weights)
+
+        self.output_neuron_activ = linear(output_neuron)  # activate layer
+
+        # adding to history for later use
+        self.layers_history.append(self.output_neuron_activ)
+
+        print("Final output:", self.output_neuron_activ)
 
     def backward(self):
         pass
