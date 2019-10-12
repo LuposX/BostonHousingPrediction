@@ -82,7 +82,7 @@ $ python -m boston_housing_prediction -h
     *   normal equation :heavy_check_mark:
     *   neural network :x:
 
-*   Upload pre-trained models :x: 
+*   Upload pre-trained models :heavy_check_mark::
 
 ## Meta
 

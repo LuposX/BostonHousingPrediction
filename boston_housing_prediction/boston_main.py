@@ -9,6 +9,7 @@ from normal_equation_model import *
 from misc_libary import *
 from misc_libary import *
 from visualize_libary import *
+from neural_network_model import *
 
 # TODO: fix train and test loss
 
@@ -23,7 +24,7 @@ def main():
 
     # available options for the command line use
     parser.add_argument("model", help="Choose which model you want to use for prediction.",
-                        type=str, choices=["linear_regression", "polynomial_regression", "normal_equation"])
+                        type=str, choices=["linear_regression", "polynomial_regression", "normal_equation", "neural_network"])
     parser.add_argument("--infile", help="If file specified model will load weights from it."
                                          "Else it will normally train.(default: no file loaded)"
                         , metavar="FILE", type=str)  # type=argparse.FileType('r', encoding='UTF-8')
@@ -70,7 +71,7 @@ def main():
 
     # df variables
     df_arg_list = preproc_data(df_data, args)
-    df_args = df_arg_list[0:2]
+    df = df_arg_list[0:2]
     args_normalization = df_arg_list[2:]
 
     # check arguments programm got started with
@@ -79,7 +80,7 @@ def main():
         print("Linear-regression")
         print("--------------------------------------")
 
-        model_line = LinearRegression(df_args, args)  # create our model
+        model_line = LinearRegression(df, args)  # create our model
 
         if not args.infile:
             model_line.train()  # train our model
@@ -113,7 +114,7 @@ def main():
 
         # visualizing is in a new process
         visualize_process = mp.Process(target=visualize,
-                                       args=(args, df_args, list_process_arg))  # use "args" if arguments are needed
+                                       args=(args, df, list_process_arg))  # use "args" if arguments are needed
         visualize_process.start()
         # END: visualisation
         # ------------------------
@@ -126,7 +127,7 @@ def main():
         print("Polynomial-regression with GradientDescent")
         print("--------------------------------------")
 
-        model_poly = PolynomialRegression(df_args, args)  # create our model
+        model_poly = PolynomialRegression(df, args)  # create our model
 
         if not args.infile:
             model_poly.train()  # train our model
@@ -159,7 +160,7 @@ def main():
 
         # visualizing is in a new process
         visualize_process = mp.Process(target=visualize,
-                                       args=(args, df_args, list_process_arg))  # use "args" if arguments are needed
+                                       args=(args, df, list_process_arg))  # use "args" if arguments are needed
         visualize_process.start()
         # END: visualisation
         # ------------------------
@@ -193,6 +194,14 @@ def main():
 
         if args.predict_on:
             model_norm.predic(visualize_process)  # make preictions with the model
+
+    elif args.model == "neural_network" and not args.h_features:
+        print(" ")
+        print("Neural-Network")
+        print("--------------------------------------")
+
+        nn = NeuralNetwork([2, 2, 2], df)
+        nn.forward()
 
     # print what the feature shortcuts means
     elif args.h_features:

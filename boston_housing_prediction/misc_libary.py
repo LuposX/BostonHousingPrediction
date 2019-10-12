@@ -4,7 +4,7 @@ from os import path
 from random import sample
 
 import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import axes3d, Axes3D   # needed
+from mpl_toolkits.mplot3d import axes3d, Axes3D  # needed
 
 import pandas as pd
 import seaborn as sns
@@ -13,6 +13,22 @@ import operator
 
 # global variables
 temp_change = 0
+
+
+def tanh(x: float) -> float:
+    return 2 / (1 + np.exp(-2 * x)) - 1
+
+
+def linear(x: float) -> float:
+    return x
+
+
+def relu(x: list) -> list:
+    activ_x = []
+    for item in x:
+        activ_x.append(max(0.0, item))
+    return activ_x
+
 
 def sigmoid(x: float) -> float:
     return 1 / (1 + np.exp(-x))
@@ -52,7 +68,7 @@ def download_dataset() -> None:
         if url.lower().startswith('http'):
             file = open("boston_housing.csv", "w+")  # the plus asgins when not exist we create it
             data = urllib.request.urlopen(url).read().decode(
-            'utf-8')
+                'utf-8')
             file.write(data)
             file.close()
         else:
@@ -63,7 +79,7 @@ def download_dataset() -> None:
             if url.lower().startswith('http'):
                 file = open("boston_housing.csv", "w+")  # the plus asgins when not exist we create it
                 data = urllib.request.urlopen(url).read().decode(
-                'utf-8')
+                    'utf-8')
                 file.write(data)
                 file.close()
             else:
@@ -95,7 +111,7 @@ def preproc_data(df: object, args) -> list:
 
         return df_new_train, df_new_test, df_new_range, df_new_mean
 
-    elif args.model == "polynomial_regression" or args.model == "normal_equation":
+    elif args.model == "polynomial_regression" or args.model == "normal_equation" or args.model == "neural_network":
         df_new = df
 
         # normalization variables for polynomial regression
@@ -135,6 +151,7 @@ def hypothesis_normal(weights, f1, f2, f3, bias):
            weights[9] * bias
 
     return pred
+
 
 # convert our arguments from strings into booleans
 def parse_bool_args(args):
