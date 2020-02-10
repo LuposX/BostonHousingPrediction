@@ -66,7 +66,7 @@ def download_dataset() -> None:
     try:
         url = "https://raw.githubusercontent.com/udacity/machine-learning/master/projects/boston_housing/housing.csv"
         if url.lower().startswith('http'):
-            file = open("boston_housing.csv", "w+")  # the plus asgins when not exist we create it
+            file = open("boston_housing.csv", "w+")  # the plus assigns when not exist we create it
             data = urllib.request.urlopen(url).read().decode(
                 'utf-8')
             file.write(data)
@@ -77,7 +77,7 @@ def download_dataset() -> None:
         try:
             url = "https://raw.githubusercontent.com/LuposX/BostonHousingPrediction/master/dataset/boston_housing.csv"
             if url.lower().startswith('http'):
-                file = open("boston_housing.csv", "w+")  # the plus asgins when not exist we create it
+                file = open("boston_housing.csv", "w+")  # the plus assigns when not exist we create it
                 data = urllib.request.urlopen(url).read().decode(
                     'utf-8')
                 file.write(data)

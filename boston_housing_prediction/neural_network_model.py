@@ -1,108 +1,214 @@
-import numpy as np
-from misc_libary import sigmoid, relu, linear
+import torch
+import torch.nn as nn
+import torch.nn.functional as F
+import torch.optim as optim
+from torch.utils.data import Dataset, DataLoader
 
-# TODO: change wwight insit from ones() to zero()
+import torchvision
+import torchvision.transforms
 
-class NeuralNetwork:
-    def __init__(self, list_architecture, df):
-        # Hyperparameter
-        self.list_architecture = list_architecture
-        self.epochs = 20
-        self.alpha = 0.003
-        self.num_feature = 3
+import pandas as pd
 
-        # get the data in form
-        self.df_data_train = df[0].iloc[:,  df[0].columns != "MEDV"].reset_index(drop=True)    # the ":" stands for every element in there
-        self.df_target_train = df[0]["MEDV"].tolist()
+import tqdm
 
-        self.df_data_test = df[1].iloc[:, df[0].columns != "MEDV"].reset_index(drop=True)  # the ":" stands for every element in there
-        self.df_target_test = df[1]["MEDV"].tolist()
+from datetime import datetime
 
-        # misc
-        self.weight = self.init_weight()
-        self.layers_history = []
-        self.output_neuron_activ = 0
 
-    # init the weights of the nn
-    def init_weight(self) -> list:
-        weights = []
+class BostonDataset(Dataset):
+    """Boston Housing dataset"""
 
-        # for input layer
-        weights.append(np.ones(self.num_feature * self.list_architecture[0]).tolist())
+    def __init__(self, csv_file):
+        df = pd.read_csv(csv_file)
+        data = df.loc[:, df.columns != "MEDV"]
+        self.data = torch.tensor(data.values, dtype=torch.float32)
 
-        # for hidden layers
-        for i in range(0, len(self.list_architecture)):
-            if len(self.list_architecture) > i + 1:
-                weights.append(np.ones(self.list_architecture[i] * self.list_architecture[i + 1]).tolist())
+        target = df.loc[:, df.columns == "MEDV"]
+        target /= 100000
+        self.target = torch.tensor(target.values, dtype=torch.float32)
 
-        # for output layer
-        weights.append(np.ones(1 * self.list_architecture[-1]).tolist())
+    def __len__(self):
+        return len(self.data)
 
-        return weights
+    def __getitem__(self, idx):
+        if torch.is_tensor(idx):
+            idx = idx.tolist()
+
+        sample = self.data[idx]
+        sample_target = self.target[idx]
+
+        return sample, sample_target
 
 
 
-    def train(self):
-        for i in range(self.epochs):
-            pass
+class NeuralNetwork(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.fc1 = nn.Linear(in_features=3, out_features=6)
+        self.fc2 = nn.Linear(in_features=6, out_features=3)
+        self.fc3 = nn.Linear(in_features=3, out_features=1)
 
-    # calulating the forward pass
-    def forward(self):
-        # for _ in range(self.epochs):
-        #for i in range(len(self.df_data_train)):
-        # input layer
-        #input_layer = [self.df_data_train["RM"][i], self.df_data_train["LSTAT"][i], self.df_data_train["PTRATIO"][i]]
-        input_layer = [self.df_data_train["RM"][2], self.df_data_train["LSTAT"][2], self.df_data_train["PTRATIO"][2]]
-        #activ_input_layer = relu(input_layer)  # "activ" stands for activated
+    def forward(self, x):
+        x = x
+        x = torch.nn.functional.relu(self.fc1(x))
+        x = torch.nn.functional.relu(self.fc2(x))
+        x = self.fc3(x)
 
-        # for amount of hidden layer
-        # --------------------------------------------
-        # input layer is outside of loop
-        input_layer_trans = np.reshape(input_layer, (1, self.num_feature)).flatten()
-        weights = np.asarray(np.reshape(self.weight[0], (self.num_feature, self.list_architecture[0])))
+        return x
 
-        # calculating
-        curr_layer = np.dot(input_layer_trans, weights)  # curr_layer current layer
 
-        # adding to history for later use
-        self.layers_history.append(curr_layer)
+def get_input_parameters():
+    # getting the learning rate for the model
+    alpha = 0
+    epochs = 0
+    batch_size = 0
+    while True:
+        try:
+            # getting the learning rate
+            alpha = input("Please type the value of learning rate you want to use: ")
 
-        for k in range(len(self.list_architecture) - 1):  # "- 1" because we subtract output layer
-            # getting input values in right shape
-            weights = np.asarray(np.reshape(self.weight[k + 1], (self.list_architecture[k], self.list_architecture[k + 1])))  # "weight[k + 1]" because weight[0] is for input layer
-
-            # calculating
-            curr_layer = np.dot(curr_layer, weights)
-            activ_curr_layer = relu(curr_layer)
-
-            # adding to history for later use
-            self.layers_history.append(activ_curr_layer)
-
-            # communication is key
+            alpha = float(alpha)
+            if 0 < alpha < 1:
+                alpha = alpha
+                break
             print(" ")
-            print("------------")
-            print("weights:", weights)
-            print("shape:", weights.shape)
-
+            print("Please input a number between 0 and 1 :)")
+        except ValueError:
             print(" ")
-            print("input:", curr_layer)
-            print("shape:", curr_layer.shape)
+            print("Invalid Input!")
 
+    # exits while loop when right inputs got inserted
+    while True:
+        try:
+            # get input for our model
+            epochs = input("Please type the numbers of epoch you want to train: ")
+
+            epochs = int(epochs)
+            if epochs > 0:
+                epochs = epochs
+                break
             print(" ")
-            print("output:", activ_curr_layer)
+            print("Please don't input negative numbers :)")
+        except ValueError:
+            print(" ")
+            print("Invalid Input!")
 
-        # output layer is outside of loop
-        weights = np.asarray(np.reshape(self.weight[-1], (1, self.list_architecture[-1])))
+        # exits while loop when right inputs got inserted
+    while True:
+        try:
+            # get input for our model
+            batch_size = input("Please type the batch_size: ")
 
-        # calculating
-        output_neuron = np.dot(self.layers_history[-1], weights)
+            batch_size = int(batch_size)
+            if batch_size > 0:
+                batch_size = batch_size
+                break
+            print(" ")
+            print("Please don't input negative numbers :)")
+        except ValueError:
+            print(" ")
+            print("Invalid Input!")
 
-        self.output_neuron_activ = linear(output_neuron)  # activate layer
+    return alpha, epochs, batch_size
 
-        # adding to history for later use
-        self.layers_history.append(self.output_neuron_activ)
 
-        print("Final output:", self.output_neuron_activ)
+def _init_data(batch_size):
+    train_set = BostonDataset("boston_housing.csv")
+    data_loader = DataLoader(train_set, batch_size=batch_size)
 
-    def backward(self):
-        pass
+    return data_loader
+
+
+def get_num_correct(preds, labels):
+    return preds.argmax(dim=1).eq(labels).sum().item()
+
+
+def train_nn(lr, EPOCH, batch_size, save):
+    print(" ")
+    print("Training")
+    print("---------------------------------")
+
+    train_loader = _init_data(batch_size)
+
+    net = NeuralNetwork()
+    loss_func = nn.MSELoss()
+    optimizer = optim.Adam(net.parameters(), lr=lr)
+    
+    for epoch in range(EPOCH):
+        total_loss = 0
+        for batch in train_loader:
+            inputs, labels = batch
+            
+            optimizer.zero_grad()
+            pred = net(inputs)
+            loss = loss_func(pred, labels)
+            loss.backward()
+            optimizer.step()
+
+            total_loss += loss.item()
+
+        print(f'Loss in Epoch {epoch}: {total_loss}')
+    print("---------------------------------")
+
+    if save:
+        time = datetime.now()
+        date_time = time.strftime("_%d_%m_%Yx%H_%M_%S")
+        torch.save(net.state_dict(), "../pre_trained_models/" + str(net.__class__.__name__) + str(date_time) + ".pt")
+
+def get_input_predict():
+    while True:
+        try:
+            print('If you want to quit type: "quit".')
+            print('Only Values with the type of "int" or "float" are allowed.')
+            print("Type the Values in the following order: ")
+            print("1.RM 2.LSTAT 3.PTRATIO")
+            input_list = []
+            default_values = [6.24, 12.94,
+                              18.52]  # those are the default values when field is left empty. default values corrospond to mean values of feature
+            for i in range(0, 3, 1):
+                # exits while loop when right inputs got inserted
+                while True:
+                    input_var = input() or default_values[i]
+
+                    if input_var == "quit" or input_var == "Quit":
+                        print(" ")
+                        print("Please be noted that this value is a estimate. I am not liable responsibly.")
+                        print(
+                            "For more information about the copyright of this programm look at my Github repository: ")
+                        print("github.com/LuposX/BostonHousingPrediction")
+                        sys.exit(0)  # exit the script sucessful
+                        break
+
+                    try:
+                        input_var = float(input_var)
+                        if input_var < 0:
+                            print("Please don't enter negative numbers :)")
+                        else:
+                            break
+
+                    except ValueError:
+                        print("Invalid Input :/")
+
+                input_list.append(input_var)
+
+        except Exception as e:
+            print(str(e))
+
+        return input_list
+
+
+def predict_nn(model_path):
+    net = NeuralNetwork()a
+    try:
+        net.load_state_dict(torch.load(model_path))
+    except Exception as e:
+        print(e)
+        sys.exit(0)
+
+    inputs = get_input_predict()
+
+    out = net(torch.tensor(inputs))
+
+    print("Output")
+    print("----------------")
+    print("Predicted-Output: ", out)
+

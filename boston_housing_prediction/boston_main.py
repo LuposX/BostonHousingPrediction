@@ -120,7 +120,7 @@ def main():
         # ------------------------
 
         if args.predict_on:
-            model_line.predic(visualize_process, args_normalization)  # make preictions with the model
+            model_line.predic(visualize_process, args_normalization)  # make predictions with the model
 
     elif args.model == "polynomial_regression" and not args.h_features:
         print(" ")
@@ -200,8 +200,12 @@ def main():
         print("Neural-Network")
         print("--------------------------------------")
 
-        nn = NeuralNetwork([2, 6, 4, 1], df)
-        nn.forward()
+        if args.infile:
+            predict_nn(str(args.infile))
+        else:
+            train_nn(*get_input_parameters(), args.save)
+
+
 
     # print what the feature shortcuts means
     elif args.h_features:
