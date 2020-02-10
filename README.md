@@ -34,6 +34,9 @@ $ python -m boston_housing_prediction -h
 <!--__For more examples and usage, please refer to the [Wiki][wiki]._-->
 
 ## Release History
+*   1.0.0
+    *   added Neural Network with pytorch
+    
 *   0.3.0
     *   added normal_equation
 
