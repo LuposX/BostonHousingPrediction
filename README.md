@@ -61,7 +61,7 @@ $ python -m boston_housing_prediction -h
     
 *   0.1.2
     *   bugfixes #4, #5
-    *   serperated code in diffeent files for more clarity. See code folder
+    *   serperated code in different files for more clarity. See code folder
 
 *   0.1.1
     *   added functionality to load models without training
