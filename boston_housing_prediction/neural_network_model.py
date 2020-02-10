@@ -12,6 +12,7 @@ import pandas as pd
 import tqdm
 
 from datetime import datetime
+import sys
 
 
 class BostonDataset(Dataset):
@@ -23,7 +24,7 @@ class BostonDataset(Dataset):
         self.data = torch.tensor(data.values, dtype=torch.float32)
 
         target = df.loc[:, df.columns == "MEDV"]
-        target /= 100000
+        target /= 1000000
         self.target = torch.tensor(target.values, dtype=torch.float32)
 
     def __len__(self):
@@ -197,7 +198,7 @@ def get_input_predict():
 
 
 def predict_nn(model_path):
-    net = NeuralNetwork()a
+    net = NeuralNetwork()
     try:
         net.load_state_dict(torch.load(model_path))
     except Exception as e:
@@ -211,4 +212,5 @@ def predict_nn(model_path):
     print("Output")
     print("----------------")
     print("Predicted-Output: ", out)
+    print("Output in 1,000,000$")
 
